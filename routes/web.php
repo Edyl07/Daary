@@ -122,5 +122,5 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth'
 
 
 Route::get('testing-deploy', function () {
-    return 'تم بفضل الله';
+    return 'Bonjour Demba';
 });
