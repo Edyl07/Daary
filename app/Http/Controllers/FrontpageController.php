@@ -18,8 +18,7 @@ class FrontpageController extends Controller
 
     public function index(Request $request)
     {
-        $agent = auth()->user();
-        dd($agent);
+        
 
         $sliders        = Slider::latest()->get();
         $properties     = Property::latest()->where('featured', 1)->with('rating')->withCount('comments')->take(6)->get();
