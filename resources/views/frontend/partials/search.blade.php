@@ -1,13 +1,13 @@
 <!-- SEARCH SECTION -->
 
-<section class="light-green lighten-1 search-section white-text center" style="margin: -170px 0;">
+<section class="light-green lighten-1 search-section white-text center" style="margin: -200px 0;">
     <div class="container">
         <div class="row m-b-0">
             <div class="col s12">
 
                 <form action="{{ route('search')}} " method="GET" style="z-index: 1; opacity: 1;">
 
-                    <div class="searchbar">
+                    <div class="searchbar row">
                         <div class="input-field col s12 m3">
                             <input type="text" name="city" id="autocomplete-input" class="autocomplete custominputbox"
                                 autocomplete="off">
@@ -23,6 +23,15 @@
                         </div>
 
                         <div class="input-field col s12 m2">
+                            <select name="cusine" class="browser-default">
+                                <option value="" disabled selected>Type de Cusine</option>
+                                <option value="interne">Interne</option>
+                                <option value="externe">Externe</option>
+                                <option value="Les_deux">Interne & Externe</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-field col s12 m2">
                             <select name="purpose" class="browser-default">
                                 <option value="" disabled selected>Categorie</option>
                                 <option value="Louer">Louer</option>
@@ -36,6 +45,17 @@
                                 @if(isset($bedroomdistinct))
                                 @foreach($bedroomdistinct as $bedroom)
                                 <option value="{{$bedroom->bedroom}}">{{$bedroom->bedroom}}</option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
+
+                        <div class="input-field col s12 m2">
+                            <select name="douche" class="browser-default">
+                                <option value="" disabled selected>Salle de Bain</option>
+                                @if(isset($douchedistinct))
+                                @foreach($douchedistinct as $douche)
+                                <option value="{{$douche->douche}}">{{$douche->douche}}</option>
                                 @endforeach
                                 @endif
                             </select>

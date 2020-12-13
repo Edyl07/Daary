@@ -20,8 +20,8 @@ class CreatePropertiesTable extends Migration
             $table->double('price', 8, 2);
             $table->boolean('featured')->default(false);
             $table->boolean('publish')->default(true);
-            $table->enum('purpose', ['sale', 'rent']);
-            $table->enum('type', ['house', 'apartment']);
+            $table->enum('purpose', ['Vendre', 'Louer']);
+            $table->enum('type', ['Maison', 'Appartment']);
             $table->string('image')->nullable();
             $table->integer('bedroom');
             $table->integer('bathroom');
@@ -30,7 +30,7 @@ class CreatePropertiesTable extends Migration
             $table->string('address');
             $table->integer('area');
             $table->integer('agent_id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->text('description');
             $table->string('video')->nullable();
             $table->string('floor_plan')->nullable();

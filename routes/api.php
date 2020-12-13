@@ -30,12 +30,21 @@ Route::get('mobile/search', 'Api\PropertyController@search');
 Route::get('mobile/properties', 'Api\PropertyController@index');
 Route::get('mobile/property/{id}', 'Api\PropertyController@show');
 
+Route::get('mobile/agents', 'Api\AgentController@index');
+Route::get('mobile/agent/{id}', 'Api\AgentController@show');
+
+Route::get('mobile/agent/properties', 'Api\PropertyController@propertiesAgent');
+Route::get('mobile/agent/messages', 'Api\MessageController@message');
+Route::get('mobile/agent/profile', 'Api\AgentController@profile');
+
 Route::group(['middleware' => ['jwt.verify']], function () {
-    Route::get('user', 'Api\Auth\AuthController@getAuthenticatedUser');
+    Route::get('mobile/user', 'Api\Auth\AuthController@getAuthenticatedUser');
     Route::post('mobile/logout', 'Api\Auth\AuthController@logout');
     Route::post('mobile/verify_mobile', 'Api\Auth\ForgotPasswordController@verify');
     Route::get('mobile/change_password', 'Api\Auth\ForgotPasswordController@changePassword');
     Route::post('mobile/add_property', 'Api\PropertyController@store');
-    Route::post('mobile/update_property/{property}', 'Api\PropertyController@update');
-    Route::post('mobile/delete_property/{property}', 'Api\PropertyController@destroy');
+    Route::post('mobile/update_property/{id}', 'Api\PropertyController@update');
+    Route::post('mobile/delete_property/{id}', 'Api\PropertyController@destroy');
+    Route::post('mobile/toggle_favorite/{id}', 'Api\PropertyController@add');
+    Route::get('mobile/test', 'Api\PropertyController@test');
 });

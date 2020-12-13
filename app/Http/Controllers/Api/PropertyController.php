@@ -4,8 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Property;
+use App\PropertyImageGallery;
 use App\Rating;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PropertyController extends Controller
 {
@@ -40,7 +46,7 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'     => 'required|unique:properties|max:255',
+            'title'     => 'required|max:255',
             'price'     => 'required',
             'purpose'   => 'required',
             'type'      => 'required',
@@ -90,6 +96,8 @@ class PropertyController extends Controller
         $property->price    = $request->price;
         $property->purpose  = $request->purpose;
         $property->type     = $request->type;
+        $property->cuisine   = $request->cuisine;
+        $property->douche   = $request->douche;
         $property->image    = $imagename;
         $property->bedroom  = $request->bedroom;
         $property->bathroom = $request->bathroom;
@@ -98,9 +106,9 @@ class PropertyController extends Controller
         $property->address  = $request->address;
         $property->area     = $request->area;
 
-        if (isset($request->featured)) {
-            $property->featured = true;
-        }
+        // if (isset($request->featured)) {
+        //     $property->featured = true;
+        // }
         $property->agent_id           = Auth::id();
         // $property->video              = $request->video;
         $property->floor_plan         = $imagefloorplan;
@@ -108,10 +116,11 @@ class PropertyController extends Controller
         $property->location_latitude  = $request->location_latitude;
         $property->location_longitude = $request->location_longitude;
         $property->nearby             = $request->nearby;
+        // dd($property);
         $property->save();
 
+        
         $property->features()->attach($request->features);
-
 
         $gallary = $request->file('gallaryimage');
 
@@ -132,8 +141,30 @@ class PropertyController extends Controller
             }
         }
 
-        
-        return response()->json(compact('property'));
+        if ($property->save()){
+            // return response()->json(compact());
+            return ['Success'=> $property];
+        }else{
+            // return response()->json(compact(['Error'=> 'Failed Insert Property']));
+            return ['Error'=> 'Failed Insert Property'];
+        }
+
+    }
+
+    /**
+     * add favorite & delete favorite
+     */
+
+    public function add(Request $request, $id){
+        $property = Property::findOrFail($id);
+
+        auth()->user()->toggleFavorite($property);  
+
+        return ['success' => 'add favorite'];
+    }
+
+    public function test(){
+        return auth()->user();
     }
 
     /**
@@ -173,7 +204,7 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $property)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'title'     => 'required|max:255',
@@ -195,7 +226,7 @@ class PropertyController extends Controller
         $image = $request->file('image');
         $slug  = str_slug($request->title);
 
-        $property = Property::find($property->id);
+        $property = Property::find($id);
 
         if (isset($image)) {
             $currentDate = Carbon::now()->toDateString();
@@ -232,11 +263,14 @@ class PropertyController extends Controller
             $imagefloorplan = $property->floor_plan;
         }
 
+        
         $property->title    = $request->title;
         $property->slug     = $slug;
         $property->price    = $request->price;
         $property->purpose  = $request->purpose;
         $property->type     = $request->type;
+        $property->cuisine   = $request->cuisine;
+        $property->douche   = $request->douche;
         $property->image    = $imagename;
         $property->bedroom  = $request->bedroom;
         $property->bathroom = $request->bathroom;
@@ -254,8 +288,6 @@ class PropertyController extends Controller
         $property->description          = $request->description;
         //$property->video                = $request->video;
         $property->floor_plan           = $imagefloorplan;
-        $property->location_latitude    = $request->location_latitude;
-        $property->location_longitude   = $request->location_longitude;
         $property->nearby               = $request->nearby;
         $property->save();
 
@@ -282,8 +314,20 @@ class PropertyController extends Controller
         }
 
         
-        return response()->json(compact('property'));
+        return ['success' => 'à été mis à jour avec succèss'];
     }
+
+
+    /**
+     * properties agent
+     */
+
+     public function propertiesAgent(){
+        $properties = Property::where('agent_id', JWTAuth::user()->id)
+        ->get();
+
+        return response()->json(compact('properties'));
+     }
 
     /**
      * Remove the specified resource from storage.
@@ -291,9 +335,9 @@ class PropertyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Property $property)
+    public function destroy($id)
     {
-        $property = Property::find($property->id);
+        $property = Property::find($id);
 
         if (Storage::disk('public')->exists('property/' . $property->image)) {
             Storage::disk('public')->delete('property/' . $property->image);
@@ -317,7 +361,7 @@ class PropertyController extends Controller
         $property->features()->detach();
 
         
-        return response()->json(compact('property'));
+        return ['Success' => 'Ce propriéte a été supprimé', 'Property' => $property];
     }
 
     /**

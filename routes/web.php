@@ -2,7 +2,7 @@
 
 // FRONT-END ROUTES
 Route::get('/', 'FrontpageController@index')->name('home');
-Route::post('/like', 'FrontpageController@likeProperty')->name('like');
+// Route::post('/like', 'FrontpageController@likeProperty')->name('like');
 Route::get('/slider', 'FrontpageController@slider')->name('slider.index');
 
 Route::get('/search', 'FrontpageController@search')->name('search');
@@ -118,9 +118,4 @@ Route::group(['prefix' => 'user', 'namespace' => 'User', 'middleware' => ['auth'
     Route::post('message/replay', 'DashboardController@messageSend')->name('message.send');
     Route::post('message/readunread', 'DashboardController@messageReadUnread')->name('message.readunread');
     Route::delete('message/delete/{id}', 'DashboardController@messageDelete')->name('messages.destroy');
-});
-
-
-Route::get('testing-deploy', function () {
-    return 'Bonjour Demba';
 });

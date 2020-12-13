@@ -28,13 +28,16 @@
         {{-- MAIN NAVIGATION BAR --}}
         @include('frontend.partials.navbar')
 
-        {{-- SLIDER SECTION --}}
+        
         @if(Request::is('/'))
+            {{-- SLIDER SECTION --}}
             @include('frontend.partials.slider')
+            {{-- SEARCH BAR --}}
+            @include('frontend.partials.search')
         @endif
 
-        {{-- SEARCH BAR --}}
-        @include('frontend.partials.search')
+        
+        
         
         {{-- MAIN CONTENT --}}
         <div class="main">

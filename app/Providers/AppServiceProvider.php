@@ -30,6 +30,9 @@ class AppServiceProvider extends ServiceProvider
             $bedroomdistinct  = Property::select('bedroom')->distinct()->get();
             view()->share('bedroomdistinct', $bedroomdistinct);
 
+            $douchedistinct  = Property::select('douche')->distinct()->get();
+            view()->share('douchedistinct', $douchedistinct);
+
             $cities   = Property::select('city')->distinct()->get();
             $citylist = array();
             foreach($cities as $city){

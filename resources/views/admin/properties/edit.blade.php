@@ -126,11 +126,11 @@
 
                     <div class="form-group form-float">
                         <div class="form-line {{$errors->has('purpose') ? 'focused error' : ''}}">
-                            <label>Select Purpose</label>
+                            <label>Selectionnez le Type de Bien</label>
                             <select name="purpose" class="form-control show-tick">
                                 <option value="">-- Please select --</option>
-                                <option value="sale" {{ $property->purpose=='sale' ? 'selected' : '' }}>Sale</option>
-                                <option value="rent" {{ $property->purpose=='rent' ? 'selected' : '' }}>Rent</option>
+                                <option value="Vendre" {{ $property->purpose=='Vendre' ? 'selected' : '' }}>Vendre</option>
+                                <option value="Louer" {{ $property->purpose=='Louer' ? 'selected' : '' }}>Louer</option>
                             </select>
                         </div>
                     </div>
@@ -139,10 +139,29 @@
                         <div class="form-line {{$errors->has('type') ? 'focused error' : ''}}">
                             <label>Select type</label>
                             <select name="type" class="form-control show-tick">
-                                <option value="">-- Please select --</option>
-                                <option value="house" {{ $property->type=='house' ? 'selected' : '' }}>House</option>
-                                <option value="apartment" {{ $property->type=='apartment' ? 'selected' : '' }}>Apartment</option>
+                                <option value="">-- SVP Selectionnez --</option>
+                                <option value="Maison" {{ $property->type=='Maison' ? 'selected' : '' }}>Maison</option>
+                                <option value="Appartement" {{ $property->type=='Appartement' ? 'selected' : '' }}>Appartement</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line {{$errors->has('type') ? 'focused error' : ''}}">
+                            <label>Type de cuisine</label>
+                            <select name="cuisine" class="form-control show-tick">
+                                <option value="">-- SVP Selectionnez --</option>
+                                <option value="extern" {{ $property->cuisine=='extern' ? 'selected' : '' }}>Externe</option>
+                                <option value="intern" {{ $property->cuisine=='intern' ? 'selected' : '' }}>Interne</option>
+                                <option value="Les_deux" {{ $property->cuisine=='Les_deux' ? 'selected' : '' }}>Les deux</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="number" name="douche" class="form-control" value="{{$property->douche}}" required>
+                            <label class="form-label">Nombre Douche</label>
                         </div>
                     </div>
 

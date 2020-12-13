@@ -18,6 +18,8 @@ class FrontpageController extends Controller
 
     public function index(Request $request)
     {
+        $agent = auth()->user();
+        dd($agent);
 
         $sliders        = Slider::latest()->get();
         $properties     = Property::latest()->where('featured', 1)->with('rating')->withCount('comments')->take(6)->get();
@@ -41,11 +43,15 @@ class FrontpageController extends Controller
     {
         $city     = strtolower($request->city);
         $type     = $request->type;
+        $cuisine  = $request->cuisine;
+        $douche   = $request->douche;
         $purpose  = $request->purpose;
         $bedroom  = $request->bedroom;
         $bathroom = $request->bathroom;
         $minprice = $request->minprice;
         $maxprice = $request->maxprice;
+        $mindouche = $request->mindouche;
+        $maxdouche = $request->maxdouche;
         $minarea  = $request->minarea;
         $maxarea  = $request->maxarea;
         $featured = $request->featured;
@@ -56,6 +62,12 @@ class FrontpageController extends Controller
             })
             ->when($type, function ($query, $type) {
                 return $query->where('type', '=', $type);
+            })
+            ->when($cuisine, function ($query, $cuisine) {
+                return $query->where('cuisine', '=', $cuisine);
+            })
+            ->when($douche, function ($query, $douche) {
+                return $query->where('douche', '=', $douche);
             })
             ->when($purpose, function ($query, $purpose) {
                 return $query->where('purpose', '=', $purpose);
@@ -72,14 +84,17 @@ class FrontpageController extends Controller
             ->when($maxprice, function ($query, $maxprice) {
                 return $query->where('price', '<=', $maxprice);
             })
+            ->when($mindouche, function ($query, $mindouche) {
+                return $query->where('price', '>=', $mindouche);
+            })
+            ->when($maxdouche, function ($query, $maxdouche) {
+                return $query->where('price', '<=', $maxdouche);
+            })
             ->when($minarea, function ($query, $minarea) {
                 return $query->where('area', '>=', $minarea);
             })
             ->when($maxarea, function ($query, $maxarea) {
                 return $query->where('area', '<=', $maxarea);
-            })
-            ->when($featured, function ($query, $featured) {
-                return $query->where('featured', '=', 1);
             })
             ->paginate(10);
 

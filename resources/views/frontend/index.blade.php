@@ -114,7 +114,7 @@
 
                         <div class="home-icons">
                             <div class="address">
-                                <i class="small material-icons left">location_city</i>
+                                <i class="small material-icons left">local_offer</i>
                                 <span>{{ ucfirst($property->city) }}</span>
                             </div>
                             <div class="address">
@@ -122,14 +122,23 @@
                                 <span>{{ ucfirst($property->address) }}</span>
                             </div>
                             <div class="address">
-                                <i class="small material-icons left">check_box</i>
+                                @if ($property->type == 'Appartement')
+                                <i class="small material-icons left">location_city</i>
                                 <span>{{ ucfirst($property->type) }} à {{ $property->purpose }}</span>
+                                @else
+                                <i class="small material-icons left">home</i>
+                                <span>{{ ucfirst($property->type) }} à {{ $property->purpose }}</span>
+                                @endif
                             </div>
+                            
                         </div>
 
                         <h5>
                             {{ $property->price }} Mru
                             {{-- <div class="right" id="propertyrating-{{$property->id}}"></div> --}}
+                            <div style="text-align: justify !important; font-size:20px; font-weight: 400 !important">
+                                <p style="text-align: justify !important; font-size:20px; font-weight: 400 !important">{!! str_limit($property->description, 100) !!}</p>
+                            </div>
                         </h5>
                     </div>
                     <div class="card-action property-action">
@@ -147,8 +156,17 @@
                             Surface: <strong>{{ $property->area}}</strong> m²
                         </span>
                         <span class="btn-flat">
-                            <i class="material-icons">comment</i>
-                            <strong>{{ $property->comments_count}}</strong>
+                            @if ($property->douche == 'Les_deux')
+                            <i class="material-icons">kitchen</i>
+                            Cuisine:<strong>Interne & Externe</strong>
+                            @else
+                            <i class="material-icons">kitchen</i>
+                            Cuisine:<strong>{{ $property->cuisine}}</strong>
+                            @endif
+                        </span>
+                        <span class="btn-flat">
+                            <i class="fas fa-bath" style="transform: translateY(0px)"></i>
+                            Salle de bain:<strong>{{ $property->douche}}</strong>
                         </span>
                     </div>
                 </div>
@@ -229,7 +247,7 @@
 
                         <div class="home-icons">
                             <div class="address">
-                                <i class="small material-icons left">location_city</i>
+                                <i class="small material-icons left">local_offer</i>
                                 <span>{{ ucfirst($property->city) }}</span>
                             </div>
                             <div class="address">
@@ -237,12 +255,21 @@
                                 <span>{{ ucfirst($property->address) }}</span>
                             </div>
                             <div class="address">
-                                <i class="small material-icons left">check_box</i>
-                                <span>{{ ucfirst($property->type) }} for {{ $property->purpose }}</span>
+                                @if ($property->type == 'Appartement')
+                                <i class="small material-icons left">location_city</i>
+                                <span>{{ ucfirst($property->type) }} à {{ $property->purpose }}</span>
+                                @else
+                                <i class="small material-icons left">home</i>
+                                <span>{{ ucfirst($property->type) }} à {{ $property->purpose }}</span>
+                                @endif
                             </div>
+                            
                         </div>
                         <h5>
                             {{ $property->price }} Mru
+                            <div style="text-align: justify !important; font-size:20px; font-weight: 400 !important">
+                                <p style="text-align: justify !important; font-size:20px; font-weight: 400 !important">{!! str_limit($property->description, 100) !!}</p>
+                            </div>
                             {{-- <div class="right" id="propertyrating-{{$property->id}}"></div> --}}
                         </h5>
                     </div>
@@ -261,8 +288,17 @@
                             Surface: <strong>{{ $property->area}}</strong> m²
                         </span>
                         <span class="btn-flat">
-                            <i class="material-icons">comment</i>
-                            <strong>{{ $property->comments_count}}</strong>
+                            @if ($property->douche == 'Les_deux')
+                            <i class="material-icons">kitchen</i>
+                            Cuisine:<strong>Interne & Externe</strong>
+                            @else
+                            <i class="material-icons">kitchen</i>
+                            Cuisine:<strong>{{ $property->cuisine}}</strong>
+                            @endif
+                        </span>
+                        <span class="btn-flat">
+                            <i class="fas fa-bath" style="transform: translateY(0px)"></i>
+                            Salle de bain:<strong>{{ $property->douche}}</strong>
                         </span>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 <div class="navbar-fixed">
-    <nav class="light-green darken-4">
+    <nav class="light-green white">
         <div class="container">
             <div class="nav-wrapper">
 
@@ -37,8 +37,8 @@
                     </li>
 
                     @guest
-                    <li><a href="{{ route('login') }}"><i class="material-icons">input</i></a></li>
-                    <li><a href="{{ route('register') }}"><i class="material-icons">person_add</i></a></li>
+                    <li><a href="{{ route('login') }}">Login<i style="transform: translateY(4px); margin-left: 3px; font-size: 20px" class="fas fa-sign-in-alt"></i></a></li>
+                    <li><a href="{{ route('register') }}"><i class="fas fa-user-plus" style="font-size: 20px; transform : translateY(3px)"></i></a></li>
                     @else
                     <li>
                         <a class="dropdown-trigger" href="#!" data-target="dropdown-auth-frontend">
@@ -50,21 +50,21 @@
                     <ul id="dropdown-auth-frontend" class="dropdown-content">
                         <li>
                             @if(Auth::user()->role->id == 1)
-                            <a href="{{ route('admin.dashboard') }}" class="indigo-text">
+                            <a href="{{ route('admin.dashboard') }}" class="light-green-text">
                                 <i class="material-icons">person</i>Profile
                             </a>
                             @elseif(Auth::user()->role->id == 2)
-                            <a href="{{ route('agent.dashboard') }}" class="indigo-text">
+                            <a href="{{ route('agent.dashboard') }}" class="light-green-text">
                                 <i class="material-icons">person</i>Profile
                             </a>
                             @elseif(Auth::user()->role->id == 3)
-                            <a href="{{ route('user.dashboard') }}" class="indigo-text">
+                            <a href="{{ route('user.dashboard') }}" class="light-green-text">
                                 <i class="material-icons">person</i>Profile
                             </a>
                             @endif
                         </li>
                         <li>
-                            <a class="dropdownitem indigo-text" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            <a class="dropdownitem light-green-text" href="{{ route('logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
                                 <i class="material-icons">power_settings_new</i>{{ __('Deconnecter') }}
                             </a>

@@ -115,8 +115,8 @@
                         <div class="form-line {{$errors->has('purpose') ? 'focused error' : ''}}">
                             <label>Select Purpose</label>
                             <select name="purpose" class="form-control show-tick">
-                                <option value="">-- Please select --</option>
-                                <option value="sale">Sale</option>
+                                <option value="">-- SVP selectionnez --</option>
+                                <option value="sale">A Vendre</option>
                                 <option value="rent">Rent</option>
                             </select>
                         </div>
@@ -124,12 +124,31 @@
 
                     <div class="form-group form-float">
                         <div class="form-line {{$errors->has('type') ? 'focused error' : ''}}">
-                            <label>Select type</label>
+                            <label>Selectionnez type</label>
                             <select name="type" class="form-control show-tick">
-                                <option value="">-- Please select --</option>
-                                <option value="house">House</option>
-                                <option value="apartment">Apartment</option>
+                                <option value="">-- SVP selectionnez --</option>
+                                <option value="house">Maison</option>
+                                <option value="apartment">Appartement</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line {{$errors->has('cuisine') ? 'focused error' : ''}}">
+                            <label>Type de Cuisine</label>
+                            <select name="cuisine" class="form-control show-tick">
+                                <option value="">-- SVP selectionnez --</option>
+                                <option value="extern">Intern</option>
+                                <option value="intern">Extern</option>
+                                <option value="Les_deux">Les Deux</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="number" class="form-control" name="douche" required>
+                            <label class="form-label">Douche</label>
                         </div>
                     </div>
 

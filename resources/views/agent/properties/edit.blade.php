@@ -92,43 +92,119 @@
                         </div>
 
                         <div class="row">
-                            <div class="col s3">
+                            <div class="col s4">
                                 <label class="label-custom" for="type">Type de propriétés</label>
                                 <p>
                                     <label>
-                                        <input class="with-gap" name="type" value="house" type="radio"
-                                            {{ $property->type == 'house' ? 'checked' : '' }} />
+                                        <input class="with-gap" name="type" value="Appartement" type="radio"
+                                            {{ $property->type == 'Appartement' ? 'checked' : '' }} />
+                                        <span>Appartement</span>
+                                    </label>
+                                    <p>
+                                    </p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Maison" type="radio"
+                                            {{ $property->type == 'Maison' ? 'checked' : '' }} />
                                         <span>Maison</span>
                                     </label>
                                     <p>
                                     </p>
                                     <label>
-                                        <input class="with-gap" name="type" value="apartment" type="radio"
-                                            {{ $property->type == 'apartment' ? 'checked' : '' }} />
-                                        <span>Appartement</span>
+                                        <input class="with-gap" name="type" value="Boutique" type="radio"
+                                            {{ $property->type == 'Boutique' ? 'checked' : '' }} />
+                                        <span>Boutique</span>
+                                    </label>
+                                    <p>
+                                    </p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Duplex" type="radio"
+                                            {{ $property->type == 'Duplex' ? 'checked' : '' }} />
+                                        <span>Duplex</span>
+                                    </label>
+                                    <p>
+                                    </p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Bureau" type="radio"
+                                            {{ $property->type == 'Bureau' ? 'checked' : '' }} />
+                                        <span>Bureau</span>
+                                    </label>
+                                    <p>
+                                    </p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Studio" type="radio"
+                                            {{ $property->type == 'Studio' ? 'checked' : '' }} />
+                                        <span>Studio</span>
+                                    </label>
+                                    <p>
+                                    </p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Immeuble" type="radio"
+                                            {{ $property->type == 'Immeuble' ? 'checked' : '' }} />
+                                        <span>Immeuble</span>
+                                    </label>
+                                    <p>
+                                    </p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Terrain" type="radio"
+                                            {{ $property->type == 'Terrain' ? 'checked' : '' }} />
+                                        <span>Terrain</span>
                                     </label>
                                 </p>
                             </div>
+                            <div class="col s4">
+                                <label class="label-custom" for="cuisine">Type de Cuisine</label>
+                                <p>
+                                    <label>
+                                        <input class="with-gap" name="cuisine" value="interne" type="radio" 
+                                        {{ $property->cuisine == 'interne' ? 'checked' : '' }} />
+                                        <span>Interne</span>
+                                    </label>
+                                    <p>
+                                    </p>
+                                    <label>
+                                        <input class="with-gap" name="cuisine" value="externe" type="radio" 
+                                        {{ $property->cuisine == 'externe' ? 'checked' : '' }} />
+                                        <span>Externe</span>
+                                    </label>
+                                    <p>
+                                    </p>
+                                    <label>
+                                        <input class="with-gap" name="cuisine" value="Les_deux" type="radio" 
+                                        {{ $property->cuisine == 'Les_deux' ? 'checked' : '' }} />
+                                        <span>Interne & Externe</span>
+                                    </label>
+                                </p>
+                            </div>
+
+                            <div class="input-field col s4">
+                                <i class="fas fa-bath prefix"></i>
+                                <input id="douche" name="douche" type="number" value="{{ $property->douche }}"
+                                    class="validate">
+                                <label for="douche">Nombre de Salle de Bain</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col s3">
                                 <label class="label-custom" for="purpose">Type de bien</label>
                                 <p>
                                     <label>
-                                        <input class="with-gap" name="purpose" value="sale" type="radio"
-                                            {{ $property->purpose == 'sale' ? 'checked' : '' }} />
+                                        <input class="with-gap" name="purpose" value="Vendre" type="radio"
+                                            {{ $property->purpose == 'Vendre' ? 'checked' : '' }} />
                                         <span>Vendre</span>
                                     </label>
                                     <p>
                                     </p>
                                     <label>
-                                        <input class="with-gap" name="purpose" value="rent" type="radio"
-                                            {{ $property->purpose == 'rent' ? 'checked' : '' }} />
+                                        <input class="with-gap" name="purpose" value="Louer" type="radio"
+                                            {{ $property->purpose == 'Louer' ? 'checked' : '' }} />
                                         <span>Location</span>
                                     </label>
                                 </p>
                             </div>
                             <div class="input-field col s6">
                                 <select multiple name="features[]">
-                                    <option value="" disabled>Choose Features</option>
+                                    <option value="" disabled>Type de Quartier</option>
                                     @foreach($features as $feature)
                                     <option value="{{ $feature->id }}" @foreach($property->features as $checked)
                                         {{ ($checked->id == $feature->id) ? 'selected' : '' }}
@@ -136,13 +212,13 @@
                                         >{{ $feature->name }}</option>
                                     @endforeach
                                 </select>
-                                <label class="label-custom">Caractéristiques</label>
+                                <label class="label-custom">Type de Quartier</label>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="file-field input-field col s10">
-                                <div class="btn indigo">
+                                <div class="btn light-green">
                                     <span>Image en Avant</span>
                                     <input type="file" name="image">
                                 </div>
@@ -183,7 +259,7 @@
 
             <div class="row">
                 <div class="file-field input-field col s10">
-                    <div class="btn indigo">
+                    <div class="btn light-green">
                         <span>Plan du Propriété</span>
                         <input type="file" name="floor_plan">
                     </div>
@@ -223,20 +299,20 @@
             @endif
             <div class="row">
                 <div class="file-field input-field col s12">
-                    <div class="btn indigo">
+                    <div class="btn light-green">
                         <span>Galleries d'images</span>
                         <input type="file" name="gallaryimage[]" multiple>
                         <span class="helper-text" data-error="wrong" data-success="right">Ajouter d'autre images</span>
                     </div>
                     <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" placeholder="Upload one or more images">
+                        <input class="file-path validate" type="text" placeholder="Ajouter d'autre images">
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col s12 m-t-30">
-                    <button class="btn waves-effect waves-light btn-large indigo darken-4" type="submit">
+                    <button class="btn waves-effect waves-light btn-large light-green darken-4" type="submit">
                         Méttre à jours
                         <i class="material-icons right">send</i>
                     </button>

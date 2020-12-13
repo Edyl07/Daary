@@ -50,7 +50,7 @@
                                     <a href="{{route('property.show',$property->slug)}}" target="_blank"
                                         class="border-bottom display-block p-15  grey-text-d-2">
                                         {{ ++$key }}. {{ str_limit($property->title, 28) }}
-                                        <span class="right">&dollar;{{ $property->price }}</span>
+                                        <span class="right">{{ $property->price }} Mru</span>
                                     </a>
                                 </div>
                                 @endforeach

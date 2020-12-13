@@ -118,6 +118,8 @@ class PropertyController extends Controller
         $property->price    = $request->price;
         $property->purpose  = $request->purpose;
         $property->type     = $request->type;
+        $property->cuisine   = $request->cuisine;
+        $property->douche   = $request->douche;
         $property->image    = $imagename;
         $property->bedroom  = $request->bedroom;
         $property->bathroom = $request->bathroom;
@@ -238,6 +240,8 @@ class PropertyController extends Controller
         $property->price    = $request->price;
         $property->purpose  = $request->purpose;
         $property->type     = $request->type;
+        $property->cuisine   = $request->cuisine;
+        $property->douche   = $request->douche;
         $property->image    = $imagename;
         $property->bedroom  = $request->bedroom;
         $property->bathroom = $request->bathroom;

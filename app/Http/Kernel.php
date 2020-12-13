@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'agent' => \App\Http\Middleware\AgentMiddleware::class,
         'user' => \App\Http\Middleware\UserMiddleware::class,
         'jwt.verify' => \App\Http\Middleware\JwtMiddleware::class,
+        'jwt.refresh' => Tymon\JWTAuth\Http\Middleware\RefreshToken::class,
     ];
 }

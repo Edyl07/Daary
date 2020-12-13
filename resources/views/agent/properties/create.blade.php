@@ -82,44 +82,102 @@
                         </div>
 
                         <div class="row">
-                            <div class="col s3">
+                            <div class="col s4">
                                 <label class="label-custom" for="type">Type de Bien</label>
                                 <p>
                                     <label>
-                                        <input class="with-gap" name="type" value="house" type="radio" />
+                                        <input class="with-gap" name="type" value="Maison" type="radio" />
                                         <span>Maison</span>
+                                    </label>
+                                    <p></p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Appartement" type="radio" />
+                                        <span>Appartement</span>
+                                    </label>
+                                    <p></p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Duplex" type="radio" />
+                                        <span>Duplex</span>
+                                    </label>
+                                    <p></p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Boutique" type="radio" />
+                                        <span>Boutique</span>
+                                    </label>
+                                    <p></p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Immeuble" type="radio" />
+                                        <span>Immeuble</span>
+                                    </label>
+                                    <p></p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Studio" type="radio" />
+                                        <span>Studio</span>
+                                    </label>
+                                    <p></p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Bureau" type="radio" />
+                                        <span>Bureau</span>
+                                    </label>
+                                    <p></p>
+                                    <label>
+                                        <input class="with-gap" name="type" value="Terrain" type="radio" />
+                                        <span>Terrain</span>
+                                    </label>
+                                </p>
+                            </div>
+                            <div class="col s4">
+                                <label class="label-custom" for="cuisine">Type de Cuisine</label>
+                                <p>
+                                    <label>
+                                        <input class="with-gap" name="cuisine" value="interne" type="radio" />
+                                        <span>Interne</span>
                                     </label>
                                     <p>
                                     </p>
                                     <label>
-                                        <input class="with-gap" name="type" value="apartment" type="radio" />
-                                        <span>Appartement</span>
+                                        <input class="with-gap" name="cuisine" value="externe" type="radio" />
+                                        <span>Externe</span>
+                                    </label>
+                                    <p>
+                                    </p>
+                                    <label>
+                                        <input class="with-gap" name="cuisine" value="Les_deux" type="radio" />
+                                        <span>Interne & Externe</span>
                                     </label>
                                 </p>
                             </div>
-                            <div class="col s3">
+                            <div class="input-field col s4">
+                                <i class="fas fa-bath prefix"></i>
+                                <input id="douche" name="douche" type="number" class="validate">
+                                <label for="douche">Nombre de Salle de Bain</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s4">
                                 <label class="label-custom" for="purpose">Type de Propriété</label>
                                 <p>
                                     <label>
-                                        <input class="with-gap" name="purpose" value="sale" type="radio" />
+                                        <input class="with-gap" name="purpose" value="Vendre" type="radio" />
                                         <span>Vendre</span>
                                     </label>
                                     <p>
                                     </p>
                                     <label>
-                                        <input class="with-gap" name="purpose" value="rent" type="radio" />
+                                        <input class="with-gap" name="purpose" value="Louer" type="radio" />
                                         <span>Location</span>
                                     </label>
                                 </p>
                             </div>
                             <div class="input-field col s6">
                                 <select multiple name="features[]">
-                                    <option value="" disabled selected>Choisir Le quartier</option>
+                                    <option value="" disabled selected>Choisir Le Type de Quartier</option>
                                     @foreach($features as $feature)
                                     <option value="{{ $feature->id }}">{{ $feature->name }}</option>
                                     @endforeach
                                 </select>
-                                <label class="label-custom">Choisir Le quartier</label>
+                                <label class="label-custom">Type de Quartier</label>
                             </div>
                         </div>
 
