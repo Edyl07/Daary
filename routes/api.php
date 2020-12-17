@@ -46,5 +46,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('mobile/update_property/{id}', 'Api\PropertyController@update');
     Route::post('mobile/delete_property/{id}', 'Api\PropertyController@destroy');
     Route::post('mobile/toggle_favorite/{id}', 'Api\PropertyController@add');
-    Route::get('mobile/test', 'Api\PropertyController@test');
+    Route::get('mobile/profile', 'Api\AgentController@profile');
+    Route::post('mobile/updateProfile', 'Api\AgentController@updateProfile');
+    Route::get('mobile/added_properties', 'Api\PropertyController@agentProperties');
 });

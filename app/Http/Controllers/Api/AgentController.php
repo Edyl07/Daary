@@ -56,16 +56,15 @@ class AgentController extends Controller
         return response()->json(compact('agent'));
     }
 
-    /**
+     /**
      * Show the form for editing the specified resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function profile()
     {
-        if(auth()->user()){
-            return 'success';
-        }
+        $profile = Auth::user();
+        return response()->json(compact('profile'));
     }
 
     /**

@@ -160,6 +160,21 @@ class PropertyController extends Controller
 
         return ['success' => 'add favorite'];
     }
+    
+
+     /**
+     * properties agent
+     */
+
+    public function agentProperties(){
+         
+        $properties = Property::latest()
+        ->withCount('comments')
+        ->where('agent_id', Auth::id())
+        ->paginate(10);
+
+        return response()->json(compact('properties'));
+     }
 
     public function test(){
         return auth()->user();
