@@ -37,6 +37,9 @@ Route::get('mobile/agent/properties', 'Api\PropertyController@propertiesAgent');
 Route::get('mobile/agent/messages', 'Api\MessageController@message');
 Route::get('mobile/agent/profile', 'Api\AgentController@profile');
 
+//message
+Route::post('mobile/property/message', 'Api\PropertyController@messageAgent');
+
 Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('mobile/user', 'Api\Auth\AuthController@getAuthenticatedUser');
     Route::post('mobile/logout', 'Api\Auth\AuthController@logout');
@@ -49,4 +52,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('mobile/profile', 'Api\AgentController@profile');
     Route::post('mobile/updateProfile', 'Api\AgentController@updateProfile');
     Route::get('mobile/added_properties', 'Api\PropertyController@agentProperties');
+
+    //message
+    Route::get('mobile/message', 'Api\PropertyController@message');
+    Route::get('mobile/message/replay/{id}', 'Api\PropertyController@messageReplay');
+    Route::post('mobile/message/replay', 'Api\PropertyController@messageSend');
 });

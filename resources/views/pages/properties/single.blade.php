@@ -158,13 +158,21 @@
                 </div>
 
                 <div>
-                    @if($property->featured == 1)
+                    {{-- @if($property->featured == 1)
                     <a class="btn-floating btn-small disabled"><i class="material-icons">star</i></a>
-                    @endif
+                    @endif --}}
 
                     <span class="btn btn-small disabled b-r-20">Chambres: {{ $property->bedroom}} </span>
-                    <span class="btn btn-small disabled b-r-20">Piéces: {{ $property->bathroom}} </span>
+                    {{-- <span class="btn btn-small disabled b-r-20">Piéces: {{ $property->bathroom}} </span> --}}
                     <span class="btn btn-small disabled b-r-20">Surfaces: {{ $property->area}} m²</span>
+                    <span class="btn btn-small disabled b-r-20">Cuisine: 
+                        @if ($property->cuisine == 'Les_deux')
+                            Interne & Externe
+                        @else
+                        {{ $property->cuisine}}
+                        @endif
+                    </span>
+                    <span class="btn btn-small disabled b-r-20">Douches: {{ $property->douche}} </span>
                 </div>
             </div>
             <div class="col s12 m4">
@@ -393,7 +401,7 @@
                                         <input type="number" name="phone" placeholder="Votre Numéro de Téléphone">
                                     </div>
                                     <div class="box">
-                                        <textarea name="message" placeholder="Contenu du Msssage"></textarea>
+                                        <textarea name="message" placeholder="Contenu du Message"></textarea>
                                     </div>
                                     <div class="box">
                                         <button id="msgsubmitbtn" class="btn waves-effect waves-light w100 light-green darken-4"

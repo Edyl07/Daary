@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Message;
 use App\Property;
 use App\PropertyImageGallery;
 use App\Rating;
@@ -176,7 +177,7 @@ class PropertyController extends Controller
         return response()->json(compact('properties'));
      }
 
-     
+
 
     public function test(){
         return auth()->user();
@@ -540,5 +541,73 @@ class PropertyController extends Controller
             ->get();
 
             return response()->json(compact('properties'));
+    }
+
+
+     
+    /**
+     * send message to agent
+     */
+
+    public function messageAgent(Request $request)
+    {
+        $request->validate([
+            'agent_id'  => 'required',
+            'name'      => 'required',
+            'phone'     => 'required',
+            'message'   => 'required'
+        ]);
+
+         $message = new Message();
+         $message->create($request->all());
+
+        if($message){
+            return response()->json(['message' => 'Message send successfully.', 'info' => $message]);
+        }else{
+            return response()->json(['Error' => 'Message send Failed.']);
+        }
+
+    }
+
+    /**
+     * get all message
+     */
+    public function message()
+    {
+        $messages = Message::latest()->where('agent_id', Auth::id())->get();
+
+        return response()->json(compact('messages'));
+    }
+
+
+    /**
+     * replay message
+     */
+
+    public function messageReplay($id)
+    {
+        $message = Message::findOrFail($id);
+
+        return response()->json(compact('message'));
+    }
+
+
+    public function messageSend(Request $request)
+    {
+        $request->validate([
+            'agent_id'  => 'required',
+            'name'      => 'required',
+            'phone'     => 'required',
+            'message'   => 'required'
+        ]);
+
+         $message = new Message();
+         $message->create($request->all());
+
+        if($message){
+            return response()->json(['message' => 'Message send successfully.']);
+        }else{
+            return response()->json(['Error' => 'Message send Failed.']);
+        }
     }
 }
