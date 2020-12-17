@@ -160,7 +160,7 @@ class PropertyController extends Controller
 
         return ['success' => 'add favorite'];
     }
-    
+
 
      /**
      * properties agent
@@ -175,6 +175,8 @@ class PropertyController extends Controller
 
         return response()->json(compact('properties'));
      }
+
+     
 
     public function test(){
         return auth()->user();

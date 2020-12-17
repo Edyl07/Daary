@@ -68,6 +68,55 @@ class AgentController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateProfile(Request $request)
+    { 
+        $request->validate([
+            'name'      => 'required',
+            'username'  => 'required',
+            // 'phone_number' => 'required|digits:11|unique:users',
+            'email'     => 'required|email',
+            'image'     => 'image|mimes:jpeg,jpg,png',
+            'about'     => 'max:250'
+        ]);
+
+        $user = User::find(Auth::id());
+
+        $image = $request->file('image');
+        $slug  = str_slug($request->name);
+
+        if(isset($image)){
+            $currentDate = Carbon::now()->toDateString();
+            $imagename = $slug.'-agent-'.Auth::id().'-'.$currentDate.'.'.$image->getClientOriginalExtension();
+
+            if(!Storage::disk('public')->exists('users')){
+                Storage::disk('public')->makeDirectory('users');
+            }
+            if(Storage::disk('public')->exists('users/'.$user->image) && $user->image != 'default.png' ){
+                Storage::disk('public')->delete('users/'.$user->image);
+            }
+            $userimage = Image::make($image)->stream();
+            Storage::disk('public')->put('users/'.$imagename, $userimage);
+        }
+
+        $user->name = $request->name;
+        $user->username = $request->username;
+        // $user->phone_number = $request->phone_number;
+        $user->email = $request->email;
+        $user->image = $imagename;
+        $user->about = $request->about;
+
+        if($user->save()){
+            return ['success' => 'vos données ont  bien mis été à jour', 'agent' => $user];
+        }else{
+            return ['error' => 'Error de mise à jour de vos données'];
+        }
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
