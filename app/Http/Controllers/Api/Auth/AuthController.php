@@ -100,4 +100,29 @@ class AuthController extends Controller
 
         return response()->json($data);
     }
+
+
+    // change password
+    public function changePasswordUpdate(Request $request)
+    {
+        if (!(Hash::check($request->get('currentpassword'), Auth::user()->password))) {
+
+            return ['message' => 'Votre mot de passe actuel ne correspond pas au mot de passe que vous avez fourni! Veuillez réessayer.'];
+        }
+        if(strcmp($request->get('currentpassword'), $request->get('newpassword')) == 0){
+
+            return ['message' => 'Le nouveau mot de passe ne peut pas être identique à votre mot de passe actuel! Veuillez choisir un mot de passe différent.'];
+        }
+
+        $this->validate($request, [
+            'currentpassword' => 'required',
+            'newpassword' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('newpassword'));
+        $user->save();
+
+        return ['message' => 'Le mot de passe a été changé avec succès.'];
+    }
 }
