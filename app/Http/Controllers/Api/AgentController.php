@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Property;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,8 +53,9 @@ class AgentController extends Controller
     public function show($id)
     {
         $agent = User::where('role_id', 2)->where('id', $id)->get();
+        $properties_agent = Property::where('agent_id', $id)->paginate(10);
 
-        return response()->json(compact('agent'));
+        return response()->json(compact('agent', 'properties_agent'));
     }
 
      /**
