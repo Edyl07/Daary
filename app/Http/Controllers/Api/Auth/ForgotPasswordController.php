@@ -14,10 +14,10 @@ class ForgotPasswordController extends Controller
     
    public function sendInfo(Request $request){
        $data = $request->validate([
-           'phone' => 'required|string'
+           'phone_number' => 'required|string'
        ]);
 
-       $user = User::wherePhone($data['phone'])->first();
+       $user = User::wherePhoneNumber($data['phone_number'])->first();
        
     //    return response()->json(compact('user'));
         
@@ -28,7 +28,7 @@ class ForgotPasswordController extends Controller
             $twilio = new Client($twilio_sid, $token);
             $twilio->verify->v2->services($twilio_verify_sid)
                 ->verifications
-                ->create($data['phone'], "sms");
+                ->create($data['phone_number'], "sms");
            $user_token = JWTAuth::fromUser($user);
            return response()->json(compact('user', 'user_token'));
        }else{
@@ -44,7 +44,7 @@ class ForgotPasswordController extends Controller
     {
         $data = $request->validate([
             'verification_code' => ['required', 'numeric'],
-            'phone' => ['required', 'string'],
+            'phone_number' => ['required', 'string'],
         ]);
 
         try {
@@ -54,12 +54,12 @@ class ForgotPasswordController extends Controller
             $twilio = new Client($twilio_sid, $token);
             $verification = $twilio->verify->v2->services($twilio_verify_sid)
                 ->verificationChecks
-                ->create($data['verification_code'], array('to' => $data['phone']));
+                ->create($data['verification_code'], array('to' => '+222'. $data['phone_number']));
 
             if ($verification->valid) {
-                $user = User::where('phone', $data['phone']);
+                $user = User::where('phone_number', $data['phone_number']);
                 $user->update(['isVerified' => true]);
-                $user_token = User::wherePhone($data['phone'])->first();
+                $user_token = User::wherePhoneNumber($data['phone_number'])->first();
                 /* Authenticate user */
                 $user_token = JWTAuth::fromUser($user_token);
                 $message = "Votre à bien été verifié";

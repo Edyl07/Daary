@@ -1,12 +1,12 @@
 @extends('frontend.layouts.app')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('css/intlTelInput.css') }}"/>
+{{--  <link rel="stylesheet" href="{{ asset('css/intlTelInput.css') }}"/>
 <style>
     label#country-placeholder{
         padding: 0 0 0 50px !important;
     }
-</style>
+</style>  --}}
 @endsection
 
 @section('content')
@@ -64,7 +64,7 @@
 
                     <div class="row">
                         <div class="input-field col s12">
-                            <label for="phone" id="country-placeholder">{{ __('Numéro de Téléphone') }}</label>
+                            <label for="phone_number" >{{ __('Numéro de Téléphone') }}</label>
                             <input id="phone_number" type="tel" class="{{ $errors->has('phone_number') ? 'is-invalid' : '' }}"
                                 name="phone_number" value="{{ old('phone_number') }}" required autofocus>
 
@@ -120,7 +120,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/intlTelInput.js') }}"></script>
+    {{--  <script src="{{ asset('js/intlTelInput.js') }}"></script>
     <script>
         var input = document.querySelector("#phone_number");
         window.intlTelInput(input, {
@@ -128,5 +128,5 @@
             preferredCountries: ["us", "gb", "co", "de"],
             utilsScript: "{{ asset('js/utils.js') }}"
         });
-    </script>
+    </script>  --}}
 @endsection
