@@ -210,7 +210,8 @@ class PropertyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $property = Property::where('id', $id)->first();
+        return response()->json(compact('property'));
     }
 
     /**
