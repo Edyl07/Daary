@@ -81,7 +81,7 @@ class AgentController extends Controller
         $request->validate([
             'name'      => 'required',
             'username'  => 'required',
-            'phone_number' => 'required|digits:8|unique:users',
+            'phone_number' => 'required|digits:8',
             'email'     => 'required|email',
             'image'     => 'image|mimes:jpeg,jpg,png',
             'about'     => 'max:250'
