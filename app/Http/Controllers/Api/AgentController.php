@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Property;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class AgentController extends Controller
 {
@@ -79,7 +81,7 @@ class AgentController extends Controller
         $request->validate([
             'name'      => 'required',
             'username'  => 'required',
-            // 'phone_number' => 'required|digits:11|unique:users',
+            'phone_number' => 'required|digits:8|unique:users',
             'email'     => 'required|email',
             'image'     => 'image|mimes:jpeg,jpg,png',
             'about'     => 'max:250'
@@ -106,7 +108,7 @@ class AgentController extends Controller
 
         $user->name = $request->name;
         $user->username = $request->username;
-        // $user->phone_number = $request->phone_number;
+        $user->phone_number = $request->phone_number;
         $user->email = $request->email;
         $user->image = $imagename;
         $user->about = $request->about;
