@@ -111,6 +111,22 @@
                             </button>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <div class="row center">
+                                <div class="input-field col s12">
+                                    <a class="waves-effect waves-light btn blue darken-4"
+                                        href="{{ url('/login/facebook') }}" style="padding : 0 30px"> <i
+                                            class="fab fa-facebook-f" style="margin-right: 5px"></i>Facebook</a>
+
+                                    <a class="waves-effect waves-light btn red darken-4"
+                                        href="{{ url('/login/google') }}" style="padding: 0 30px"> <i
+                                            class="fab fa-google" style="margin-right: 5px;"></i>Google</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
