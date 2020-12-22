@@ -14,7 +14,7 @@
 
                     <div class="row">
                         <div class="input-field col s12">
-                            <label for="phone_number">{{ __('Adresse Email Ou Numéro de Téléphone (Ex :+222 22222222)') }}</label>
+                            <label for="phone_number">{{ __('Adresse Email Ou Numéro de Téléphone') }}</label>
                             <input id="phone_number" type="text" class="{{ $errors->has('phone_number') ? 'is-invalid' : '' }}"
                                 name="phone_number" value="{{ old('phone_number') }}" required autofocus>
 
@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="input-field col s12">
                             <div class="row center">
                                 <div class="input-field col s12">
@@ -75,7 +75,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> --}}
 
                 </form>
             </div>

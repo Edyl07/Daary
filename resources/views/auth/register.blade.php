@@ -111,7 +111,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row">
+                    {{-- <div class="row">
                         <div class="input-field col s12">
                             <div class="row center">
                                 <div class="input-field col s12">
@@ -126,7 +126,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> --}}
                 </form>
             </div>
         </div>

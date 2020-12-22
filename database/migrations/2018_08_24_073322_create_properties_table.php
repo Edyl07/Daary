@@ -17,7 +17,7 @@ class CreatePropertiesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('slug')->unique();
-            $table->double('price', 8, 2);
+            $table->double('price', 12, 2);
             $table->boolean('featured')->default(false);
             $table->boolean('publish')->default(true);
             $table->enum('purpose', ['Vendre', 'Louer']);
