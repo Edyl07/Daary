@@ -41,6 +41,7 @@ class DashboardController extends Controller
             'name'      => 'required',
             'username'  => 'required',
             'email'     => 'required|email',
+            'phone_number'  => 'required|digits:8|unique:users',
             'image'     => 'image|mimes:jpeg,jpg,png',
             'about'     => 'max:250'
         ]);
@@ -66,6 +67,7 @@ class DashboardController extends Controller
 
         $user->name = $request->name;
         $user->username = $request->username;
+        $user->phone_number = $request->phone_number;
         $user->email = $request->email;
         if(isset($imagename)){
             $user->image = $imagename;

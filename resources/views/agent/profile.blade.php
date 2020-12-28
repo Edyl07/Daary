@@ -32,7 +32,7 @@
                             <div class="input-field col s6">
                                 <i class="material-icons prefix">assignment_ind</i>
                                 <input id="username" name="username" type="text"
-                                    value="{{ $profile->username or null }}" class="validate">
+                                    value="{{ $profile->username}}" class="validate">
                                 <label for="username">Nom d'utilisateur</label>
                             </div>
                         </div>
@@ -44,6 +44,15 @@
                                     class="validate">
                                 <label for="email">Email</label>
                             </div>
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">phone</i>
+                                <input id="phone" name="phone_number" type="tel" value="{{ $profile->phone_number }}"
+                                    class="validate">
+                                <label for="phone">Numéro de Téléphone</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="file-field input-field col s6">
                                 <div class="btn light-green">
                                     <span>Photo </span>
@@ -53,13 +62,10 @@
                                     <input class="file-path validate" type="text">
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="input-field col s12">
+                            <div class="input-field col s6">
                                 <i class="material-icons prefix">mode_edit</i>
                                 <textarea id="about" name="about"
-                                    class="materialize-textarea">{{ $profile->about or null }}</textarea>
+                                    class="materialize-textarea">{{ $profile->about }}</textarea>
                                 <label for="about">A propos de vous</label>
                             </div>
                         </div>
