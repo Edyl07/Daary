@@ -96,7 +96,9 @@ class SliderController extends Controller
 
         $slider->title = $request->title;
         $slider->description = $request->description;
-        $slider->image = $imagename;
+        if(isset($imagename)){
+            $slider->image = $imagename;
+        }
         $slider->save();
 
         Toastr::success('message', 'Slider updated successfully.');

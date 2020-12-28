@@ -137,7 +137,9 @@ class PostController extends Controller
         $post->user_id = Auth::id();
         $post->title = $request->title;
         $post->slug = $slug;
-        $post->image = $imagename;
+        if(isset($imagename)){
+            $post->image = $imagename;
+        }
         $post->body = $request->body;
         if(isset($request->status)){
             $post->status = true;

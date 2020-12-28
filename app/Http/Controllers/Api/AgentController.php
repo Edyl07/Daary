@@ -110,7 +110,9 @@ class AgentController extends Controller
         $user->username = $request->username;
         $user->phone_number = $request->phone_number;
         $user->email = $request->email;
-        $user->image = $imagename;
+        if(isset($imagename)){
+            $user->image = $imagename;
+        }
         $user->about = $request->about;
 
         if($user->save()){

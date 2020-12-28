@@ -97,7 +97,9 @@ class TestimonialController extends Controller
 
         $testimonial->name = $request->name;
         $testimonial->testimonial = $request->testimonial;
-        $testimonial->image = $imagename;
+        if(isset($imagename)){
+            $testimonial->image = $imagename;
+        }
         $testimonial->save();
 
         Toastr::success('message', 'Testimonial updated successfully.');

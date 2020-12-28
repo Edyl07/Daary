@@ -166,7 +166,9 @@ class DashboardController extends Controller
         $user->name = $request->name;
         $user->username = $request->username;
         $user->email = $request->email;
-        $user->image = $imagename;
+        if(isset($imagename)){
+            $user->image = $imagename;
+        }
         $user->about = $request->about;
 
         $user->save();

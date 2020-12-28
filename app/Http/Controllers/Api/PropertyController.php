@@ -288,7 +288,9 @@ class PropertyController extends Controller
         $property->type     = $request->type;
         $property->cuisine   = $request->cuisine;
         $property->douche   = $request->douche;
-        $property->image    = $imagename;
+        if(isset($imagename)){
+            $property->image = $imagename;
+        }
         $property->bedroom  = $request->bedroom;
         $property->bathroom = $request->bathroom;
         $property->city     = $request->city;
@@ -304,7 +306,9 @@ class PropertyController extends Controller
 
         $property->description          = $request->description;
         //$property->video                = $request->video;
-        $property->floor_plan           = $imagefloorplan;
+        if(isset($imagefloorplan)){
+            $property->floor_plan = $imagefloorplan;
+        }
         $property->nearby               = $request->nearby;
         $property->save();
 
