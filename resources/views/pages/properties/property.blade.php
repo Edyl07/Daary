@@ -2,6 +2,12 @@
 
 @section('styles')
 
+    <style>
+       .m-b-60 nav{
+            background-color: #fff !important;
+        }
+    </style>
+
 @endsection
 
 @section('content')
@@ -30,27 +36,65 @@
         <div class="row">
 
             @foreach($properties as $property)
-            <div class="col s12 m4">
+            <div class="col s12 m4" style="height: 410px; max-height: 420px">
                 <div class="card">
-                    <div class="card-image">
+                    <div class="card-image" data-propertyid="{{ $property->id }}">
                         @if(Storage::disk('public')->exists('property/'.$property->image) && $property->image)
                         <span class="card-image-bg"
-                            style="background-image:url({{Storage::url('property/'.$property->image)}});"></span>
+                            style="background-image:url({{Storage::url('property/'.$property->image)}});">
+                            @guest
+                            <a href="javascript:void(0);"  onclick="toastr.info('Vous avez besoin de vous connecté pour ajouter ceci à votre liste de favories.',
+                                'Info', { closeButton : true, progressBar: true })" class="btn-floating btn-favorite 
+                                light-green darken-4 like-btn" title="Featured">
+                                <i id="like{{$property->id}}" class="far fa-heart">
+                                </i>
+                            </a>
+                            @else
+                                <?php $property_id = DB::table('favorites')->where('favoriteable_id', $property->id)
+                                ->where('user_id', auth()->user()->id)
+                                ->count(); ?>
+                                @if ($property_id > 0)
+                                    <a 
+                                    href="javascript:void(0);" onclick="document.getElementById('favorite-form-{{ $property->id }}').submit();"
+                                        class="btn-floating btn-favorite  
+                                        red darken-2 like-btn" title="Featured">
+                                        <i id="like{{$property->id}}" class="far fa-heart">
+                                        </i>
+                                    </a>
+                                    <form id="favorite-form-{{ $property->id }}" action="{{ route('post.favorite', $property->id) }}" method="post" style="display: none">
+                                        @csrf
+                                    </form>
+                                @else
+                                    <a 
+                                    href="javascript:void(0);" onclick="document.getElementById('favorite-form-{{ $property->id }}').submit();"
+                                        class="btn-floating btn-favorite  
+                                        light-green darken-4 like-btn" title="Featured">
+                                        <i id="like{{$property->id}}" class="far fa-heart">
+                                        </i>
+                                    </a>
+                                    <form id="favorite-form-{{ $property->id }}" action="{{ route('post.favorite', $property->id) }}" method="post" style="display: none">
+                                        @csrf
+                                    </form>
+                                @endif
+                            
+                            @endguest
+                        </span>
                         @else
                         <span class="card-image-bg"><span>
                                 @endif
                                 @if($property->featured == 1)
-                                <a class="btn-floating halfway-fab waves-effect waves-light light-green darken-4"><i
+                                <a class="btn-floating halfway-fab  light-green darken-4" title="Featured"><i
                                         class="small material-icons">star</i></a>
                                 @endif
+
                     </div>
                     <div class="card-content property-content">
-                        <a href="{{ route('property.show',$property->slug) }}">
+                        <a class=" light-green darken-4" href="{{ route('property.show',$property->slug) }}">
                             <span class="card-title tooltipped" data-position="bottom"
-                                data-tooltip="{{ $property->title }}">{{ str_limit( $property->title, 18 ) }}</span>
+                                data-tooltip="{{ $property->title }}">{{ str_limit( $property->title, 25 ) }}</span>
                         </a>
 
-                        <div class="property-info">
+                        <div class="home-icons">
                             <div class="address">
                                 <i class="small material-icons left">local_offer</i>
                                 <span>{{ ucfirst($property->city) }}</span>
@@ -68,16 +112,18 @@
                                 <span>{{ ucfirst($property->type) }} à {{ $property->purpose }}</span>
                                 @endif
                             </div>
+                            
                         </div>
-
-                        
 
                         <h5>
                             {{ $property->price }} Mru
                             {{-- <div class="right" id="propertyrating-{{$property->id}}"></div> --}}
+                            {{--  <div style="text-align: justify !important; font-size:20px; font-weight: 400 !important">
+                                <p style="text-align: justify !important; font-size:20px; font-weight: 400 !important">{!! str_limit($property->description, 40) !!}</p>
+                            </div>  --}}
                         </h5>
                     </div>
-                    <div class="card-action property-action text-center">
+                    <div class="card-action property-action">
                         <span class="btn-flat">
                             <i class="material-icons">airline_seat_individual_suite</i>
                             Chambres: <strong>{{ $property->bedroom}}</strong>
@@ -92,7 +138,7 @@
                             Surface: <strong>{{ $property->area}}</strong> m²
                         </span>
                         <span class="btn-flat">
-                            @if ($property->cuisine == 'Les_deux')
+                            @if ($property->douche == 'Les_deux')
                             <i class="material-icons">kitchen</i>
                             Cuisine:<strong>Interne & Externe</strong>
                             @else
@@ -103,7 +149,7 @@
                         <span class="btn-flat">
                             <i class="fas fa-bath" style="transform: translateY(0px)"></i>
                             Salle de bain:<strong>{{ $property->douche}}</strong>
-                        </span> 
+                        </span>
                     </div>
                 </div>
             </div>

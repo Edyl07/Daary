@@ -68,7 +68,7 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'     => 'required|unique:properties|max:255',
+            'title'     => 'required|unique:properties|min:5|max:255',
             'price'     => 'required',
             'purpose'   => 'required',
             'type'      => 'required',
@@ -179,7 +179,7 @@ class PropertyController extends Controller
     public function update(Request $request, $property)
     {
         $request->validate([
-            'title'     => 'required|max:255',
+            'title'     => 'required|min:5|max:255',
             'price'     => 'required',
             'purpose'   => 'required',
             'type'      => 'required',

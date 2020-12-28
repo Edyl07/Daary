@@ -254,7 +254,7 @@ h4.single-title {
 
 /**** PAGINATION ****/
 .pagination li.page-item.active {
-    background-color: #2f3f9f;
+    background-color: #33691e ;
 }
 .pagination li.page-item {
     height: 40px;
@@ -262,7 +262,7 @@ h4.single-title {
     padding-left: 8px;
     padding-right: 8px;
     margin-right: 5px;
-    background-color: #5467d4;
+    background-color: #689f38;
     margin-bottom: 12px;
 }
 .pagination li.page-item a{
