@@ -23,7 +23,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Property::all();
+        $properties = Property::paginate(10);
 
         return response()->json(compact('properties'));
     }
