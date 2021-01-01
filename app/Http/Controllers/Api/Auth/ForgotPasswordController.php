@@ -29,8 +29,8 @@ class ForgotPasswordController extends Controller
             $twilio->verify->v2->services($twilio_verify_sid)
                 ->verifications
                 ->create((string)'+222'. $data['phone_number'], "sms");
-           $user_token = JWTAuth::fromUser($user);
-           return response()->json(compact('user', 'user_token'));
+           $token = JWTAuth::fromUser($user);
+           return response()->json(compact('user', 'token'));
        }else{
            $user_error = "Aucune Corespondance avec ce numèro de Téléphone";
             return response()->json(compact('user_error'));
@@ -59,11 +59,11 @@ class ForgotPasswordController extends Controller
             if ($verification->valid) {
                 $user = User::where('phone_number', $data['phone_number']);
                 $user->update(['isVerified' => true]);
-                $user_token = User::wherePhoneNumber($data['phone_number'])->first();
+                $token = User::wherePhoneNumber($data['phone_number'])->first();
                 /* Authenticate user */
-                $user_token = JWTAuth::fromUser($user_token);
+                $token = JWTAuth::fromUser($token);
                 $message = "Votre code à bien été verifié, à present veuillez changer votre numéro de passe";
-                return response()->json(compact('message', 'user_token'));
+                return response()->json(compact('message', 'token$token'));
             }
         } catch (TwilioException $e) {
             return response()->json($e->getMessage()); 
