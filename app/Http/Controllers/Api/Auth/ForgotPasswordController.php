@@ -81,7 +81,7 @@ class ForgotPasswordController extends Controller
             'newpassword' => 'required|string|min:6|confirmed',
         ]);
         
-        if(strcmp($request->get('newpassword'), $request->get('newpassword_confirmation')) == 0){
+        if(strcmp($request->get('newpassword'), $request->get('newpassword_confirmation')) == 1){
 
             return ['message' => 'Les deux mot de passe doivent être identiques! Veuillez choisir reéssayer.'];
         }
