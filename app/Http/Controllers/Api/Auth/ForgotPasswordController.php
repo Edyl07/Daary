@@ -80,6 +80,11 @@ class ForgotPasswordController extends Controller
         $this->validate($request, [
             'newpassword' => 'required|string|min:6|confirmed',
         ]);
+        
+        if(strcmp($request->get('newpassword'), $request->get('newpassword_confirmation')) == 0){
+
+            return ['message' => 'Les deux mot de passe doivent être identiques! Veuillez choisir reéssayer.'];
+        }
 
         $user = Auth::user();
         $user->password = bcrypt($request->get('newpassword'));
