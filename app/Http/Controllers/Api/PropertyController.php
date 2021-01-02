@@ -343,9 +343,8 @@ class PropertyController extends Controller
      * properties agent
      */
 
-     public function propertiesAgent(){
-        $properties = Property::where('agent_id', JWTAuth::user()->id)
-        ->get();
+    public function propertiesAgent($id){
+        $properties = Property::where('agent_id', $id)->paginate(10);
 
         return response()->json(compact('properties'));
      }

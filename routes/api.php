@@ -33,7 +33,7 @@ Route::get('mobile/property/{id}', 'Api\PropertyController@show');
 Route::get('mobile/agents', 'Api\AgentController@index');
 Route::get('mobile/agent/{id}', 'Api\AgentController@show');
 
-Route::get('mobile/agent/properties', 'Api\PropertyController@propertiesAgent');
+Route::get('mobile/agent/{id}/properties', 'Api\PropertyController@propertiesAgent');
 Route::get('mobile/agent/messages', 'Api\MessageController@message');
 Route::get('mobile/agent/profile', 'Api\AgentController@profile');
 
