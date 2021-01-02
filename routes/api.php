@@ -45,6 +45,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('mobile/logout', 'Api\Auth\AuthController@logout');
     Route::post('mobile/verify_mobile', 'Api\Auth\ForgotPasswordController@verify');
     Route::post('mobile/change_password', 'Api\Auth\AuthController@changePasswordUpdate');
+    Route::post('mobile/reset_password', 'Api\Auth\ForgotPasswordController@resetPassword');
     Route::post('mobile/add_property', 'Api\PropertyController@store');
     Route::get('mobile/edit_property/{id}', 'Api\PropertyController@edit');
     Route::post('mobile/update_property/{id}', 'Api\PropertyController@update');

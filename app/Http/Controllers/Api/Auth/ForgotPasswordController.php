@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Twilio\Rest\Client;
 use Twilio\Exceptions\TwilioException;
+use Illuminate\Support\Facades\Auth;
 
 class ForgotPasswordController extends Controller
 {
@@ -63,7 +64,7 @@ class ForgotPasswordController extends Controller
                 /* Authenticate user */
                 $token = JWTAuth::fromUser($token);
                 $message = "Votre code à bien été verifié, à present veuillez changer votre numéro de passe";
-                return response()->json(compact('message', 'token$token'));
+                return response()->json(compact('message', 'token'));
             }
         } catch (TwilioException $e) {
             return response()->json($e->getMessage()); 
@@ -73,11 +74,22 @@ class ForgotPasswordController extends Controller
         // return response()->json(compact('message'));
     }
 
-    // public function changePassword(){
-    //     $user = auth()->user();
+    public function resetPassword(Request $request)
+    {
 
-    //     $token = JWTAuth::fromUser($user);
+        $this->validate($request, [
+            'newpassword' => 'required|string|min:6|confirmed',
+        ]);
 
-    //     return response()->json(compact('user', 'token'));
-    // }
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('newpassword'));
+        $user->save();
+        $token = JWTAuth::fromUser($user);
+        if($user->save()){
+            return ['message' => 'Le mot de passe a été changé avec succès.', 'user' => $user, 'token' => $token];
+        }else {
+            return ['message' => 'Erreur de changement de mot passe, veuillez ressayez.'];
+        }
+    }
+
 }
