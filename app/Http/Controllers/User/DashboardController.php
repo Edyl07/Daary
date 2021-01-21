@@ -39,9 +39,6 @@ class DashboardController extends Controller
     {
         $request->validate([
             'name'      => 'required',
-            'username'  => 'required',
-            'phone_number'  => 'required|digits:8|unique:users',
-            'email'     => 'required|email',
             'image'     => 'image|mimes:jpeg,jpg,png',
             'about'     => 'max:250'
         ]);
@@ -65,19 +62,19 @@ class DashboardController extends Controller
             Storage::disk('public')->put('users/'.$imagename, $userimage);
         }
 
+        $username = strtok($request->name);
+
         $user->name = $request->name;
-        $user->username = $request->username;
-        $user->phone_number = $request->phone_number;
+        $user->username = $username;
         $user->email = $request->email;
-        if(isset($imagename)){
-            $user->image = $imagename;
-        }
+        $user->image = $imagename;
         $user->about = $request->about;
 
         $user->save();
 
         return back();
     }
+
 
 
     public function changePassword()

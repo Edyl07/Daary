@@ -35,12 +35,12 @@ class DashboardController extends Controller
 
         return view('agent.profile',compact('profile'));
     }
-    public function profileUpdate(Request $request)
+
+
+   public function profileUpdate(Request $request)
     {
         $request->validate([
             'name'      => 'required',
-            'username'  => 'required',
-            'email'     => 'required|email',
             'phone_number'  => 'required|digits:8|unique:users',
             'image'     => 'image|mimes:jpeg,jpg,png',
             'about'     => 'max:250'
@@ -65,8 +65,10 @@ class DashboardController extends Controller
             Storage::disk('public')->put('users/'.$imagename, $userimage);
         }
 
+        $username = strtok($request->name);
+
         $user->name = $request->name;
-        $user->username = $request->username;
+        $user->username = $username;
         $user->phone_number = $request->phone_number;
         $user->email = $request->email;
         if(isset($imagename)){
