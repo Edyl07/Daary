@@ -41,8 +41,6 @@ class AuthController extends Controller
         $roleid     = $request->get('agent') ? 2 : 3;
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
             'phone_number' => 'required|digits:8|unique:users',
             'password' => 'required|string|min:6|confirmed'
         ]);
@@ -53,8 +51,7 @@ class AuthController extends Controller
 
         $user = User::create([
             'name' => $request->get('name'),
-            'username' => $request->get('username'),
-            'email' => $request->get('email'),
+            'username' => strtok($request->get('name'), " "),
             'phone_number' => $request->get('phone_number'),
             'password' => Hash::make($request->get('password')),
             'role_id' => $roleid,
