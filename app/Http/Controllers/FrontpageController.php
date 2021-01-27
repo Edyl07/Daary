@@ -16,26 +16,30 @@ use Overtrue\LaravelFavorite\Favorite;
 class FrontpageController extends Controller
 {
 
-    public function index(Request $request)
-    {
+    // public function index(Request $request)
+    // {
         
 
-        $sliders        = Slider::latest()->get();
-        $properties     = Property::latest()->where('featured', 1)->with('rating')->withCount('comments')->take(6)->get();
-        $allProprieties = Property::where('featured', 0)->get();
-        $services       = Service::orderBy('service_order')->get();
-        $testimonials   = Testimonial::latest()->get();
-        $posts          = Post::latest()->where('status', 1)->take(6)->get();
-        // $user = Auth::user()->id;
-        // $property = new Property();
-        // $hasFavorited = Favorite::where('user_id', $user)->where('favoriteable_type', $property->getMorphClass())->count();
+    //     $sliders        = Slider::latest()->get();
+    //     $properties     = Property::latest()->where('featured', 1)->with('rating')->withCount('comments')->take(6)->get();
+    //     $allProprieties = Property::where('featured', 0)->get();
+    //     $services       = Service::orderBy('service_order')->get();
+    //     $testimonials   = Testimonial::latest()->get();
+    //     $posts          = Post::latest()->where('status', 1)->take(6)->get();
+    //     // $user = Auth::user()->id;
+    //     // $property = new Property();
+    //     // $hasFavorited = Favorite::where('user_id', $user)->where('favoriteable_type', $property->getMorphClass())->count();
 
-        //     dd($hasFavorited);
+    //     //     dd($hasFavorited);
 
-        return view('frontend.index', compact('sliders', 'properties', 'services', 'testimonials', 'posts', 'allProprieties'));
-    }
+    //     return view('frontend.index', compact('sliders', 'properties', 'services', 'testimonials', 'posts', 'allProprieties'));
+    // }
 
    
+
+    public function index(){
+        return view('frontend.new-index');
+    }
 
 
     public function search(Request $request)
