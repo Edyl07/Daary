@@ -12,7 +12,10 @@
     <title>{{ config('app.name', 'Daary-Immo') }}</title>
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" href="{{ asset('daary.png') }}" sizes="180x180">
+    <link rel="icon" 
+      type="image/png" 
+      href="{{ asset('daary.png') }}" sizes="180x180">
+    {{-- <link rel="apple-touch-icon" href="{{ asset('daary.png') }}" sizes="180x180"> --}}
 
     @yield('css')
     <style>
