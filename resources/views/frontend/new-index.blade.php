@@ -22,7 +22,7 @@
             bottom: 0;
             width: 100%;
             height: 2000px;
-            background-image: url("{{ asset('screenshoot.png') }}");
+            background-image: url("{{ asset('screenshoot-6.png') }}");
             background-repeat: no-repeat;
             background-size: 250px 500px;
         }
