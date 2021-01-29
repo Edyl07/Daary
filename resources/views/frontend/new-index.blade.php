@@ -1,270 +1,704 @@
 @extends('frontend.layouts.landig-page')
 
 @section('css')
-<style>
-    body {
-        font-family: Helvetica;
-        font-size: 1em;
-        width: 100%;
-        margin: 0px;
-        padding: 0px;
-    }
+    <style>
+        @import "compass/css3";
 
-    /* .center {
-        margin: auto;
-        width: 50%;
-        padding: 10px;
-    } */
+        @import url('https://fonts.googleapis.com/css?family=Signika');
+        @import url('https://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css');
+        @import url('https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
 
-    .button {
-        display: inline-block;
-        color: white;
-        background-color: #33691e;
-        padding: 5px;
-        border-radius: 5px;
-        text-shadow: 1px 1px 1px grey;
-    }
+        html {
+            font-family: 'Signika', sans-serif;
+        }
 
-    button.button {
-        padding: 11px 20px;
-        border: 0;
-    }
+        body {
+            background: #fff;
+        }
 
-    /*nav*/
-    nav {
-        display: block;
-        text-align: center
-    }
+        #map {
+            position: absolute;
+            top: 0px;
+            bottom: 0;
+            width: 100%;
+            height: 2000px;
+            background-image: url("{{ asset('screenshoot.png') }}");
+            background-repeat: no-repeat;
+            background-size: 250px 500px;
+        }
 
-    nav h1 {
-        display: inline-block;
-        position: relative;
-        left: 50px;
-    }
+        .notPlacemarked {
+            visibility: hidden;
+        }
 
-    nav .button {
-        position: absolute;
-        right: 50px;
-        top: 0px;
-        vertical-align: middle;
-    }
+        .placemarked {
+            //background: #FFC52F;
+            //border-color:#ffffff;
+            //border-width:5px;
+            //border-style:solid;
+            visibility: visible;
+            height: 55px;
+            width: 55px;
+            //border-radius: 25px;
+            position: relative;
+            top: 110px;
+            //left:80px;
+            margin-left: 40%;
+            z-index: 100;
+            transition: width 1s, height 1s, transform 1s;
+            -webkit-transition: width 1s, height 1s, -webkit-transform 1s;
+        }
 
-    /*nav*/
+        .container {
+            background: #00C993;
+            position: absolute;
+            display: block;
+            width: 100%;
+            //z-index:100;
+            height: 2050px;
+            color: white;
+            text-align: center;
+            min-width: 24px;
+        }
 
-    /*header*/
-    header {
-        padding: 30px;
-        background-image: url("{{ asset('saloon.jpg') }}");
-        no-repeat;
-        max-width: 100%;
-        filter: grayscale(0%);
-        background-position: center center;
-    }
+        .section {
+            position: absolute;
+            display: block;
+            width: 100%;
+            //top:400px;
+            //margin: auto;
+            //z-index:100;
+            color: white;
+            text-align: left;
+            //padding-left: 3em;
+        }
 
-    #left {
-        display: inline-block;
-        width: 50%;
-        margin-left: 50px;
-        vertical-align: middle;
-        color: white;
-    }
+        #sect1 {
+            top: 400px;
+        }
 
-    #left h2 {
-        font-size: 2.5em;
-        text-shadow: 1px 1px 2px grey;
-    }
+        #sect2 {
+            top: 1000px;
+        }
 
-    header img {
-        vertical-align: middle;
-        display: inline-block;
-        margin-left: 10%;
-        width: 25%;
-    }
+        #sect3 {
+            top: 1500px;
+        }
 
-    /*header*/
+        #footer {
+            top: 2050px;
+            //background:#DDD7D1;
+            //margin:auto;
+            height: 50px;
+            text-align: center;
+        }
 
-    /*section*/
-    section {
-        text-align: center;
-        width: 30%;
-        margin: 0px auto 0px auto;
-    }
+        #twitter {
+            float: left;
+            width: 20%;
+            font-size: 5em;
+            padding-left: 15%;
+            //padding-right:10%;
+        }
 
-    section h5 {
-        font-size: 1.5em;
-    }
+        #rocket {
+            float: right;
+            width: 20%;
+            font-size: 5em;
+            padding-left: 15%;
+            //padding-right:10%;
+        }
 
-    /*section*/
+        #hiddenIcon-2 {
+            text-align: center;
+            /* background-image: url("{{ asset('screennshoot-2.png') }}"); */
+            visibility: hidden;
+            height: 0;
+            //float:none;
+            //width: 100%;
+            font-size: 5em;
+            //padding-left:15%;
+            //padding-right:10%;
+        }
 
-    /*article*/
+        #hiddenIcon {
+            text-align: center;
+            visibility: hidden;
+            height: 0;
+            //float:none;
+            //width: 100%;
+            font-size: 5em;
+            //padding-left:15%;
+            //padding-right:10%;
+        }
 
-    article h5 {
-        text-align: center;
-        font-size: 1.5em;
-        padding-top: 10px;
-        margin-top: 10px;
-    }
+        .anchor {
+            height: 100px;
+            //margin-top:100px;
+        }
 
-    article div {
-        display: inline-block;
-        width: 25%;
-        margin-left: 50px;
-        margin-right: 50px;
-        text-align: left;
-    }
+        .band2 h2 {
+            text-align: left;
 
-    .icon {
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 10px;
-    }
+        }
 
-    div h6 {
-        display: inline-block;
-        vertical-align: middle;
-    }
+        .explanation {
+            min-width: 12.42em;
+            float: left;
+            //padding-top:5%;
+            width: 40%;
+            //display:block;
+        }
 
-    div p {
-        position: relative;
-        top: -10px;
-    }
+        .explanation-right {
+            min-width: 12.42em;
+            float: left;
+            text-align: right;
+            padding-left: 5%;
+            width: 40%;
+        }
 
-    #mobile-landscape {
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-        width: 40%;
-    }
+        #phone {
+            background: inherit;
+            border-radius: 30px;
+            box-shadow: inherit;
 
-    /*article*/
+            padding: 50px 18px 50px 18px;
+            width: 20%;
+            min-width: 200px;
+            max-width: 600px;
+            margin-right: 5%;
+            float: left;
+        }
 
-    /*aside*/
-    aside h5 {
-        text-align: center;
-        font-size: 1.5em;
-        margin-bottom: 0px;
-    }
+        #screen {
+            /* background-image: url("{{ asset('screeshoot.png') }}"); */
+            height: 478px;
+            overflow: hidden;
+            padding: 0;
+            position: relative;
+            min-width: 350px;
+        }
 
-    .geral {
-        display: inline-block;
-        width: 25%;
-        margin-left: 50px;
-        margin-right: 50px;
-    }
+        #topBar {
+            background: #00C993;
+            height: 10%;
+            overflow: hidden;
+            padding-left: 10px;
+            padding-right: 10px;
+            position: relative;
+            min-width: 100px;
+        }
 
-    aside img {
-        border-radius: 100%;
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 10px;
-    }
+        #mc_embed_signup {
+            text-align: right;
+            background-color: #00C993;
+        }
 
-    .profile {
-        display: inline-block;
-        vertical-align: middle;
-        width: 75%;
-        padding: 0px;
-    }
+        #mce-EMAIL {
+            text-align: right;
+            width: auto;
+            height: 30px;
+            margin-bottom: 20px;
+            padding-right: 1em;
+            border-style: none;
+            outline: none;
+        }
 
-    .profile h6 {
-        font-size: 1em;
-        margin-bottom: 15px;
-    }
+        #mce-EMAIL:focus {
+            outline: none;
 
-    .profile p {
-        margin-top: 0px;
-    }
+        }
 
-    /*aside*/
+        #mc-embedded-subscribe {
+            border-style: none;
+        }
 
-    /*footer*/
-    footer {
-        background: url("http://orig06.deviantart.net/8ff3/f/2012/198/7/1/fading_colors_by_nxxos-d57kk4d.jpg");
-        text-align: center;
-    }
+        .icon-bookmark {
+            float: right;
+        }
 
-    footer h4 {
-        padding-top: 10px;
-        font-size: 1.5em;
-        color: white;
-        text-shadow: 1px 1px 1px grey;
-        margin-bottom: 10px;
-    }
+        .icon-bookmark:hover {
+            color: #FFC52F;
+        }
 
-    #links div {
-        display: inline-block;
-        vertical-align: top;
-        width: 20%;
-        color: white;
-        text-align: left;
-    }
+        .pressed {
+            color: #FFC52F;
+        }
 
-    ul {
-        padding-left: 0px;
-    }
+        h1,
+        h3 {
+            font-family: 'Signika', sans-serif;
+            font-weight: 700;
+            text-align: center;
+        }
 
-    ul li {
-        list-style-position: inside;
-        list-style-type: none;
-    }
+        .container h1 {
+            font-size: 5em;
+            line-height: 1em;
+            /*margin-bottom: 1em;*/
+        }
 
-    footer p {
-        margin-top: 10px;
-        width: 100%;
-        color: white;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        text-transform: uppercase;
-        background-color: black;
-    }
+        a {
+            color: white;
+        }
 
-    /*footer*/
-</style>
+        .button {
+            background: #DDD7D1;
+            text-align: center;
+            padding: .5em 1em;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            /* box-shadow: 0 0.2em 0 #BCB1A5; */
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            /*transition cross-browser stuff*/
+            -webkit-transition: background 0.2s ease-out;
+            /* Safari 3.2+, Chrome */
+            -moz-transition: background 0.2s ease-out;
+            /* Firefox 4-15 */
+            -o-transition: background 0.2s ease-out;
+            /* Opera 10.5–12.00 */
+            transition: background 0.2s ease-out;
+            /* Firefox 16+, Opera 12.50+ */
+        }
+
+        .button:hover {
+            background: #BCB1A5;
+        }
+
+        a.arrow {
+            color: white;
+            text-align: center;
+            font-size: 3em;
+            //display:block;
+            //width:100%;
+            //float:none;
+            text-decoration: none;
+            padding-bottom: 30px;
+            /*transition cross-browser stuff*/
+            -webkit-transition: color 0.2s ease-out;
+            /* Safari 3.2+, Chrome */
+            -moz-transition: color 0.2s ease-out;
+            /* Firefox 4-15 */
+            -o-transition: color 0.2s ease-out;
+            /* Opera 10.5–12.00 */
+            transition: color 0.2s ease-out;
+            /* Firefox 16+, Opera 12.50+ */
+        }
+
+        a.arrow:hover {
+            color: #FFC52F;
+        }
+
+        @media only screen and (min-width: 767px) {
+
+            //#phone {float:left;}
+            body {
+                font-size: 1.125em;
+                /* 18px / 16px */
+
+                //line-height: 1.7em;
+            }
+
+            .container {
+                background-size: 100%;
+            }
+
+            .container h1 {
+                font-size: 3.25em;
+                /*52 / 16*/
+            }
+
+            a.button {
+                padding: .75em 1.5em;
+            }
+        }
+
+        @media only screen and (max-width: 550px) {
+            .explanation {
+                float: none;
+                margin: auto;
+                text-align: center;
+            }
+
+            .explanation-right {
+                float: none;
+                margin: auto;
+                text-align: center;
+            }
+
+            #sect1 {
+                top: 350px;
+            }
+
+            #phone {
+                visibility: hidden;
+                height: 0px;
+                width: 0px;
+                padding: 0;
+                margin: 0;
+            }
+
+            #map {
+                width: 0px;
+                height: 0px;
+            }
+
+            #sect2 {
+                top: 900px;
+            }
+
+            //#twitter{float:none;margin:auto;padding-left:0em;}
+            #rocket {
+                visibility: hidden;
+            }
+
+            #twitter {
+                visibility: hidden;
+                padding-left: 0em;
+            }
+
+            #hiddenIcon {
+                visibility: visible;
+                height: auto;
+            }
+
+            #mce-EMAIL {
+                text-align: center;
+                padding: 0;
+                float: none;
+            }
+
+            #mc_embed_signup {
+                text-align: center;
+            }
+
+        }
+
+        button.button {
+            display: inline-block;
+            color: white;
+            background-color: #33691e;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer !important;
+            /* text-shadow: 1px 1px 1px grey; */
+        }
+
+        button.button {
+            padding: 11px 20px;
+            border: 0;
+        }
+
+    </style>
 @endsection
 
 @section('content')
 
 
-<nav class="center">
-    <a href="/">
-        <img src="{{ asset('daary.png') }}" width="200" height="150" alt="" srcset="">
-    </a>
-</nav>
+    <div class="container" id="skrollr-body" data-0="background-color:rgb(0,201,147);"
+        data-400="background-color:rgb(74,173,255);" data-1000="background-color:rgb(74,173,255);"
+        data-1300="background-color:rgb(0,201,147);">
+        <h1><i class="icon-circle-blank"></i></h1>
+        <h2>Accès à tout le monde.</h2>
+        <p>Trouvez rapidement un bien immobliéres selon votre budget et vos besoins specifique.</p>
+        <a class="arrow" href="#anchor1"><i class="icon-sort-down"></i></a>
+        </p>
+        <br>
 
-<header>
-    <div id="left">
-        <h2>Trouvez la masison de vos rêves.</h2>
-        <h4>Joignez les meilleurs agents immobliéres sur les plateformes mobile et devenez proprietare ou locataire a votre tour a prix doux dans la zone Mauritanienne et tout cela dans un delais minimum  </h4>
-        {{-- <a href=""><button class="button" style="cursor: pointer"><i class="fab fa-app-store-ios" style="font-size: 15px; margin-right:5px "></i>Télécharger sur App Store</button></a> --}}
-        <a href="https://play.google.com/store/apps/details?id=com.daary_immo.startup&fbclid=IwAR3ctRNT3sgg3XKQx2QCaAfi0pIeA2oemxtYmzHIjaVAzS4-D3658mw6aeA"><button class="button" style="cursor: pointer"><i class="fab fa-google-play" style="font-size: 15px; margin-right:5px "></i>Télécharger sur Google Play Store</button></a>
-        
-    </div>
-    <img src="{{ asset('screenshoot.png') }}" alt="Mobile mockup"> 
-    </div>
-</header>
+        <div class="section" id="sect1">
+            <div class="anchor" id="anchor1"></div>
+            <div id="hiddenIcon-2">
+            </div>
+            <div id="phone" data-0="margin-left: -20%; opacity:0" data-350="margin-left: 10%; opacity:1">
 
-<article>
-    <h5>Qu'attendez-vous?</h5>
-    <div><img
-            src="https://cdn1.iconfinder.com/data/icons/freeline/32/account_friend_human_man_member_person_profile_user_users-48.png"
-            class="icon">
-        <h6>Communité<br>Imombliere</h6>
-        <p>Inscrivez-vous un seul click et ajouter un bien ou bien si vous êtes un client qui cherche un bien immobiler jettez un coup d'oeil sur le rubrique <span style="color: blue">Accèss à tout le monde</span> </p>
+                {{-- <div id="topBar">
+                    <p>Press---> <i class="icon-bookmark"></i> </p>
+                </div> --}}
+                <div id="screen">
+                    <div id="map">
+
+                    </div>
+                    <!--/ map-->
+                </div>
+                <!--/ screen-->
+            </div>
+            <!--/ phone-->
+            <div class="explanation" data-300="opacity: 0" data-350="opacity: 1">
+                <h2>Rapidite et Efficacite</h2>
+                <p>Plus question de vous déplacez, une application fluide est adaptée a vos besoins.</p>
+                <a class="arrow" href="#anchor2"><i class="icon-sort-down"></i></a>
+            </div>
+            <!--/ explanation-->
+        </div>
+        <!--/ sect1-->
+
+        <div class="section" id="sect2">
+            <div class="anchor" id="anchor2"></div>
+            <div id="hiddenIcon">
+                <i class="icon-facebook"></i>
+            </div>
+            <div id="twitter" data-600="margin-top: -20%; opacity: 0" data-1000="margin-top: 0; opacity:1">
+                <i class="icon-facebook"></i>
+            </div>
+            <div class="explanation" data-850=" opacity: 0" data-900=" opacity:1">
+                <h2>Suivez-nous sur <a href="https://web.facebook.com/Daary-Immo-102640891848033">facebook</a> </h2>
+                <p>Rejoignez notre réseau afin de découvrir des détails sur nos mises à jour.  </p>
+                <a class="arrow" href="#anchor3"><i class="icon-sort-down"></i></a>
+            </div>
+            <!--/ explanation-->
+        </div>
+        <!--sect2-->
+
+        <div class="section" id="sect3">
+            <div class="anchor" id="anchor3"></div>
+            <div id="hiddenIcon">
+                <i class="fab fa-whatsapp"></i>
+                <p></p>
+            </div>
+            <div class="explanation-right" data-1350=" opacity: 0" data-1400=" opacity:1">
+                <h2>Ou bien sur What'sApp!</h2>
+                <p>Développez des relations commerciales durables par le biais de la conversation chez <a
+                        href="https://api.whatsapp.com/send?phone=22220726780">Daary</a>
+
+                
+
+                <!--End mc_embed_signup-->
+            </div>
+            <!--/ explanation-->
+            <div id="rocket" data-1100="margin-top:-300px; margin-right:0%; opacity: 0"
+                data-1400="margin-top:50; margin-right:20%; opacity:1">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+            <!--/ rocket-->
+        </div>
     </div>
-    <div><img src="https://cdn1.iconfinder.com/data/icons/freeline/32/gps_location_map_marker-48.png" class="icon">
-        <h6>Accèss <br> à tout le monde</h6>
-        <p>Trouvez rapidement un bien selon votre budget et vos besoins specifique dans la section recherche en appuyant sur le boutton recherche a la page d'accueil.</p>
-    </div>
-    <div><img
-            src="https://cdn1.iconfinder.com/data/icons/freeline/32/alarm_alert_clock_event_history_schedule_time_watch-48.png"
-            class="icon">
-        <h6>Experience <br>Utilisateurs</h6>
-        <p>Connectez-vous a votre comptes et beneficiez de toute les  fonctionnalitées, discussion avec un agent et un client, un systémes de favories, un systéme de comparaison des biens selon le prix , la superficie et bien plus encores</p>
-    </div>
-</article>
+    <!--/ band-->
+
+    <script src="https://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js"></script>
 
 @endsection
 
+
 @section('scripts')
-<script src="https://kit.fontawesome.com/c599999fcf.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('frontend/js/dist/skrollr.min.js') }}"></script>
+    <script>
+        skrollr.init({
+            forceHeight: false
+        });
+
+
+
+        /*!
+         * Plugin for skrollr.
+         * This plugin makes hashlinks scroll nicely to their target position.
+         *
+         * Alexander Prinzhorn - https://github.com/Prinzhorn/skrollr
+         *
+         * Free to use under terms of MIT license
+         */
+        (function(document, window) {
+            'use strict';
+
+            var DEFAULT_DURATION = 500;
+            var DEFAULT_EASING = 'sqrt';
+
+            var MENU_TOP_ATTR = 'data-menu-top';
+            var MENU_OFFSET_ATTR = 'data-menu-offset';
+
+            var skrollr = window.skrollr;
+            var history = window.history;
+            var supportsHistory = !!history.pushState;
+
+            /*
+            Since we are using event bubbling, the element that has been clicked
+            might not acutally be the link but a child.
+            */
+            var findParentLink = function(element) {
+                //Yay, it's a link!
+                if (element.tagName === 'A') {
+                    return element;
+                }
+
+                //We reached the top, no link found.
+                if (element === document) {
+                    return false;
+                }
+
+                //Maybe the parent is a link.
+                return findParentLink(element.parentNode);
+            };
+
+            /*
+            Handle the click event on the document.
+            */
+            var handleClick = function(e) {
+                //Only handle left click.
+                if ((e.which || e.button) !== 1) {
+                    return;
+                }
+
+                var link = findParentLink(e.target);
+
+                //The click did not happen inside a link.
+                if (!link) {
+                    return;
+                }
+
+                if (handleLink(link)) {
+                    e.preventDefault();
+                }
+            };
+
+            /*
+            Handles the click on a link. May be called without an actual click event.
+            When the fake flag is set, the link won't change the url and the position won't be animated.
+            */
+            var handleLink = function(link, fake) {
+                //Don't use the href property (link.href) because it contains the absolute url.
+                var href = link.getAttribute('href');
+
+                //Check if it's a hashlink.
+                if (!/^#/.test(href)) {
+                    return false;
+                }
+
+                //Now get the targetTop to scroll to.
+                var targetTop;
+
+                //If there's a data-menu-top attribute, it overrides the actuall anchor offset.
+                var menuTop = link.getAttribute(MENU_TOP_ATTR);
+
+                if (menuTop !== null) {
+                    targetTop = +menuTop;
+                } else {
+                    var scrollTarget = document.getElementById(href.substr(1));
+
+                    //Ignore the click if no target is found.
+                    if (!scrollTarget) {
+                        return false;
+                    }
+
+                    targetTop = _skrollrInstance.relativeToAbsolute(scrollTarget, 'top', 'top');
+
+                    var menuOffset = scrollTarget.getAttribute(MENU_OFFSET_ATTR);
+
+                    if (menuOffset !== null) {
+                        targetTop += +menuOffset;
+                    }
+                }
+
+                if (supportsHistory && !fake) {
+                    history.pushState({
+                        top: targetTop
+                    }, '', href);
+                }
+
+                //Now finally scroll there.
+                if (_animate && !fake) {
+                    _skrollrInstance.animateTo(targetTop, {
+                        duration: _duration(_skrollrInstance.getScrollTop(), targetTop),
+                        easing: _easing
+                    });
+                } else {
+                    defer(function() {
+                        _skrollrInstance.setScrollTop(targetTop);
+                    });
+                }
+
+                return true;
+            };
+
+            var defer = function(fn) {
+                window.setTimeout(fn, 1);
+            };
+
+            /*
+            Global menu function accessible through window.skrollr.menu.init.
+            */
+            skrollr.menu = {};
+            skrollr.menu.init = function(skrollrInstance, options) {
+                _skrollrInstance = skrollrInstance;
+
+                options = options || {};
+
+                _easing = options.easing || DEFAULT_EASING;
+                _animate = options.animate !== false;
+                _duration = options.duration || DEFAULT_DURATION;
+
+                if (typeof _duration === 'number') {
+                    _duration = (function(duration) {
+                        return function() {
+                            return duration;
+                        };
+                    }(_duration));
+                }
+
+                //Use event bubbling and attach a single listener to the document.
+                skrollr.addEvent(document, 'click', handleClick);
+
+                if (supportsHistory) {
+                    window.addEventListener('popstate', function(e) {
+                        var state = e.state || {};
+                        var top = state.top || 0;
+
+                        defer(function() {
+                            _skrollrInstance.setScrollTop(top);
+                        });
+                    }, false);
+                }
+            };
+
+            //Private reference to the initialized skrollr.
+            var _skrollrInstance;
+
+            var _easing;
+            var _duration;
+            var _animate;
+
+            //In case the page was opened with a hash, prevent jumping to it.
+            //http://stackoverflow.com/questions/3659072/jquery-disable-anchor-jump-when-loading-a-page
+            defer(function() {
+                if (window.location.hash) {
+                    window.scrollTo(0, 0);
+
+                    if (document.querySelector) {
+                        var link = document.querySelector('a[href="' + window.location.hash + '"]');
+
+                        if (link) {
+                            handleLink(link, true);
+                        }
+                    }
+                }
+            });
+        }(document, window));
+
+        var s = skrollr.init( /*other stuff*/ );
+
+        //The options (second parameter) are all optional. The values shown are the default values.
+        skrollr.menu.init(s, {
+            //skrollr will smoothly animate to the new position using `animateTo`.
+            animate: true,
+
+            //The easing function to use.
+            easing: 'sqrt',
+
+            //How long the animation should take in ms.
+            duration: function(currentTop, targetTop) {
+                //By default, the duration is hardcoded at 500ms.
+                return 1000;
+
+                //But you could calculate a value based on the current scroll position (`currentTop`) and the target scroll position (`targetTop`).
+                //return Math.abs(currentTop - targetTop) * 10;
+            },
+        });
+
+        $(".icon-bookmark").click(function() {
+            $("#placemark").addClass("placemarked");
+            $(".icon-bookmark").addClass("pressed");
+        });
+
+    </script>
 @endsection
