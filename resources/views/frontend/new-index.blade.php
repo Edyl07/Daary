@@ -1,704 +1,469 @@
 @extends('frontend.layouts.landig-page')
 
 @section('css')
-    <style>
-        @import "compass/css3";
-
-        @import url('https://fonts.googleapis.com/css?family=Signika');
-        @import url('https://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css');
-        @import url('https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
-
-        html {
-            font-family: 'Signika', sans-serif;
-        }
-
-        body {
-            background: #fff;
-        }
-
-        #map {
-            position: absolute;
-            top: 0px;
-            bottom: 0;
-            width: 100%;
-            height: 2000px;
-            background-image: url("{{ asset('screenshoot-6.png') }}");
-            background-repeat: no-repeat;
-            background-size: 250px 500px;
-        }
-
-        .notPlacemarked {
-            visibility: hidden;
-        }
-
-        .placemarked {
-            //background: #FFC52F;
-            //border-color:#ffffff;
-            //border-width:5px;
-            //border-style:solid;
-            visibility: visible;
-            height: 55px;
-            width: 55px;
-            //border-radius: 25px;
-            position: relative;
-            top: 110px;
-            //left:80px;
-            margin-left: 40%;
-            z-index: 100;
-            transition: width 1s, height 1s, transform 1s;
-            -webkit-transition: width 1s, height 1s, -webkit-transform 1s;
-        }
-
-        .container {
-            background: #00C993;
-            position: absolute;
-            display: block;
-            width: 100%;
-            //z-index:100;
-            height: 2050px;
-            color: white;
-            text-align: center;
-            min-width: 24px;
-        }
-
-        .section {
-            position: absolute;
-            display: block;
-            width: 100%;
-            //top:400px;
-            //margin: auto;
-            //z-index:100;
-            color: white;
-            text-align: left;
-            //padding-left: 3em;
-        }
-
-        #sect1 {
-            top: 400px;
-        }
-
-        #sect2 {
-            top: 1000px;
-        }
-
-        #sect3 {
-            top: 1500px;
-        }
-
-        #footer {
-            top: 2050px;
-            //background:#DDD7D1;
-            //margin:auto;
-            height: 50px;
-            text-align: center;
-        }
-
-        #twitter {
-            float: left;
-            width: 20%;
-            font-size: 5em;
-            padding-left: 15%;
-            //padding-right:10%;
-        }
-
-        #rocket {
-            float: right;
-            width: 20%;
-            font-size: 5em;
-            padding-left: 15%;
-            //padding-right:10%;
-        }
-
-        #hiddenIcon-2 {
-            text-align: center;
-            /* background-image: url("{{ asset('screennshoot-2.png') }}"); */
-            visibility: hidden;
-            height: 0;
-            //float:none;
-            //width: 100%;
-            font-size: 5em;
-            //padding-left:15%;
-            //padding-right:10%;
-        }
-
-        #hiddenIcon {
-            text-align: center;
-            visibility: hidden;
-            height: 0;
-            //float:none;
-            //width: 100%;
-            font-size: 5em;
-            //padding-left:15%;
-            //padding-right:10%;
-        }
-
-        .anchor {
-            height: 100px;
-            //margin-top:100px;
-        }
-
-        .band2 h2 {
-            text-align: left;
-
-        }
-
-        .explanation {
-            min-width: 12.42em;
-            float: left;
-            //padding-top:5%;
-            width: 40%;
-            //display:block;
-        }
-
-        .explanation-right {
-            min-width: 12.42em;
-            float: left;
-            text-align: right;
-            padding-left: 5%;
-            width: 40%;
-        }
-
-        #phone {
-            background: inherit;
-            border-radius: 30px;
-            box-shadow: inherit;
-
-            padding: 50px 18px 50px 18px;
-            width: 20%;
-            min-width: 200px;
-            max-width: 600px;
-            margin-right: 5%;
-            float: left;
-        }
-
-        #screen {
-            /* background-image: url("{{ asset('screeshoot.png') }}"); */
-            height: 478px;
-            overflow: hidden;
-            padding: 0;
-            position: relative;
-            min-width: 350px;
-        }
-
-        #topBar {
-            background: #00C993;
-            height: 10%;
-            overflow: hidden;
-            padding-left: 10px;
-            padding-right: 10px;
-            position: relative;
-            min-width: 100px;
-        }
-
-        #mc_embed_signup {
-            text-align: right;
-            background-color: #00C993;
-        }
-
-        #mce-EMAIL {
-            text-align: right;
-            width: auto;
-            height: 30px;
-            margin-bottom: 20px;
-            padding-right: 1em;
-            border-style: none;
-            outline: none;
-        }
-
-        #mce-EMAIL:focus {
-            outline: none;
-
-        }
-
-        #mc-embedded-subscribe {
-            border-style: none;
-        }
-
-        .icon-bookmark {
-            float: right;
-        }
-
-        .icon-bookmark:hover {
-            color: #FFC52F;
-        }
-
-        .pressed {
-            color: #FFC52F;
-        }
-
-        h1,
-        h3 {
-            font-family: 'Signika', sans-serif;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .container h1 {
-            font-size: 5em;
-            line-height: 1em;
-            /*margin-bottom: 1em;*/
-        }
-
-        a {
-            color: white;
-        }
-
-        .button {
-            background: #DDD7D1;
-            text-align: center;
-            padding: .5em 1em;
-            color: white;
-            font-weight: bold;
-            text-decoration: none;
-            /* box-shadow: 0 0.2em 0 #BCB1A5; */
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            /*transition cross-browser stuff*/
-            -webkit-transition: background 0.2s ease-out;
-            /* Safari 3.2+, Chrome */
-            -moz-transition: background 0.2s ease-out;
-            /* Firefox 4-15 */
-            -o-transition: background 0.2s ease-out;
-            /* Opera 10.5–12.00 */
-            transition: background 0.2s ease-out;
-            /* Firefox 16+, Opera 12.50+ */
-        }
-
-        .button:hover {
-            background: #BCB1A5;
-        }
-
-        a.arrow {
-            color: white;
-            text-align: center;
-            font-size: 3em;
-            //display:block;
-            //width:100%;
-            //float:none;
-            text-decoration: none;
-            padding-bottom: 30px;
-            /*transition cross-browser stuff*/
-            -webkit-transition: color 0.2s ease-out;
-            /* Safari 3.2+, Chrome */
-            -moz-transition: color 0.2s ease-out;
-            /* Firefox 4-15 */
-            -o-transition: color 0.2s ease-out;
-            /* Opera 10.5–12.00 */
-            transition: color 0.2s ease-out;
-            /* Firefox 16+, Opera 12.50+ */
-        }
-
-        a.arrow:hover {
-            color: #FFC52F;
-        }
-
-        @media only screen and (min-width: 767px) {
-
-            //#phone {float:left;}
-            body {
-                font-size: 1.125em;
-                /* 18px / 16px */
-
-                //line-height: 1.7em;
-            }
-
-            .container {
-                background-size: 100%;
-            }
-
-            .container h1 {
-                font-size: 3.25em;
-                /*52 / 16*/
-            }
-
-            a.button {
-                padding: .75em 1.5em;
-            }
-        }
-
-        @media only screen and (max-width: 550px) {
-            .explanation {
-                float: none;
-                margin: auto;
-                text-align: center;
-            }
-
-            .explanation-right {
-                float: none;
-                margin: auto;
-                text-align: center;
-            }
-
-            #sect1 {
-                top: 350px;
-            }
-
-            #phone {
-                visibility: hidden;
-                height: 0px;
-                width: 0px;
-                padding: 0;
-                margin: 0;
-            }
-
-            #map {
-                width: 0px;
-                height: 0px;
-            }
-
-            #sect2 {
-                top: 900px;
-            }
-
-            //#twitter{float:none;margin:auto;padding-left:0em;}
-            #rocket {
-                visibility: hidden;
-            }
-
-            #twitter {
-                visibility: hidden;
-                padding-left: 0em;
-            }
-
-            #hiddenIcon {
-                visibility: visible;
-                height: auto;
-            }
-
-            #mce-EMAIL {
-                text-align: center;
-                padding: 0;
-                float: none;
-            }
-
-            #mc_embed_signup {
-                text-align: center;
-            }
-
-        }
-
-        button.button {
-            display: inline-block;
-            color: white;
-            background-color: #33691e;
-            padding: 5px;
-            border-radius: 5px;
-            cursor: pointer !important;
-            /* text-shadow: 1px 1px 1px grey; */
-        }
-
-        button.button {
-            padding: 11px 20px;
-            border: 0;
-        }
-
-    </style>
 @endsection
 
 @section('content')
+    <!-- Preloader -->
+<div id="preloader">
+    <div id="loader"></div>
+</div>
+<!--end preloader-->
 
+<div id="main" class="main-content-wraper">
+    <div class="main-content-inner">
 
-    <div class="container" id="skrollr-body" data-0="background-color:rgb(0,201,147);"
-        data-400="background-color:rgb(74,173,255);" data-1000="background-color:rgb(74,173,255);"
-        data-1300="background-color:rgb(0,201,147);">
-        <h1><i class="icon-circle-blank"></i></h1>
-        <h2>Accès à tout le monde.</h2>
-        <p>Trouvez rapidement un bien immobliéres selon votre budget et vos besoins specifique.</p>
-        <a class="arrow" href="#anchor1"><i class="icon-sort-down"></i></a>
-        </p>
-        <br>
+        <!--start header section-->
+        <header class="header">
+            <!--start navbar-->
+            <div class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="navbar-header page-scroll">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                    data-target="#myNavbar">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand page-scroll" href="index.html">
+                                <img src="{{ asset('img-2/icon-96x96.png') }}" alt="logo">
+                            </a>
+                        </div>
 
-        <div class="section" id="sect1">
-            <div class="anchor" id="anchor1"></div>
-            <div id="hiddenIcon-2">
-            </div>
-            <div id="phone" data-0="margin-left: -20%; opacity:0" data-350="margin-left: 10%; opacity:1">
-
-                {{-- <div id="topBar">
-                    <p>Press---> <i class="icon-bookmark"></i> </p>
-                </div> --}}
-                <div id="screen">
-                    <div id="map">
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="navbar-collapse collapse" id="myNavbar">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="active"><a class="page-scroll" href="#hero">Acceuil</a></li>
+                                <li><a class="page-scroll" href="#features">Fonctionnalités</a></li>
+                                <!-- <li><a class="page-scroll" href="#pricing">Pricing</a></li> -->
+                                <li><a class="page-scroll" href="#faqs">Faq</a></li>
+                                <!-- <li><a class="page-scroll" href="#news">News</a></li> -->
+                                <li><a class="page-scroll" href="#contact">Contact</a></li>
+                            </ul>
+                        </div>
 
                     </div>
-                    <!--/ map-->
                 </div>
-                <!--/ screen-->
             </div>
-            <!--/ phone-->
-            <div class="explanation" data-300="opacity: 0" data-350="opacity: 1">
-                <h2>Rapidite et Efficacite</h2>
-                <p>Plus question de vous déplacez, une application fluide est adaptée a vos besoins.</p>
-                <a class="arrow" href="#anchor2"><i class="icon-sort-down"></i></a>
-            </div>
-            <!--/ explanation-->
-        </div>
-        <!--/ sect1-->
+            <!--end navbar-->
+        </header>
+        <!--end header section-->
 
-        <div class="section" id="sect2">
-            <div class="anchor" id="anchor2"></div>
-            <div id="hiddenIcon">
-                <i class="icon-facebook"></i>
+        <!--start hero section-->
+        <section id="hero" class="section-lg section-hero section-circle">
+            <!--background circle shape-->
+            <div class="shape shape-style-1 shape-primary">
+                <span class="circle-150"></span>
+                <span class="circle-50"></span>
+                <span class="circle-50"></span>
+                <span class="circle-75"></span>
+                <span class="circle-100"></span>
+                <span class="circle-75"></span>
+                <span class="circle-50"></span>
+                <span class="circle-100"></span>
+                <span class="circle-50"></span>
+                <span class="circle-100"></span>
             </div>
-            <div id="twitter" data-600="margin-top: -20%; opacity: 0" data-1000="margin-top: 0; opacity:1">
-                <i class="icon-facebook"></i>
-            </div>
-            <div class="explanation" data-850=" opacity: 0" data-900=" opacity:1">
-                <h2>Suivez-nous sur <a href="https://web.facebook.com/Daary-Immo-102640891848033">facebook</a> </h2>
-                <p>Rejoignez notre réseau afin de découvrir des détails sur nos mises à jour.  </p>
-                <a class="arrow" href="#anchor3"><i class="icon-sort-down"></i></a>
-            </div>
-            <!--/ explanation-->
-        </div>
-        <!--sect2-->
+            <!--background circle shape-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="hero-content-wrap">
+                            <div class="hero-content">
+                                <h1>Trouvez la maison de vos rêves.</h1>
+                                <p>Joignez les meilleurs agents immobilier  s sur les plateformes mobile et devenez proprietare ou locataire a votre tour a prix doux dans toute la zone Mauritanienne et tout cela dans un delais minimum</p>
+                                <div class="slider-action-btn">
+                                    <!-- <a href="#" class="btn softo-solid-btn"><i class="fa fa-apple"></i> Appstore</a> -->
+                                    <a href="https://play.google.com/store/apps/details?id=com.daary_immo.startup&fbclid=IwAR3ctRNT3sgg3XKQx2QCaAfi0pIeA2oemxtYmzHIjaVAzS4-D3658mw6aeA" class="btn btn-icon"><i class="fa fa-android"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mobile-slider-area">
+                            <div class="phone">
+                                <img src="{{ asset('img-2/iphone-x-frame.png') }}" alt="Phone" class="img-responsive">
+                                <div class="mobile-slider owl-carousel owl-theme">
+                                    <div class="item"><img src="{{ asset('img-2/screenshoot/1.png') }}" alt="Screen 1"
+                                                           class="img-responsive"></div>
+                                    <div class="item"><img src="{{ asset('img-2/screenshoot/2.png') }}" alt="Screen 1"
+                                                           class="img-responsive"></div>
+                                    <div class="item"><img src="{{ asset('img-2/screenshoot/3.png') }}" alt="Screen 2"
+                                                           class="img-responsive"></div>
+                                    <div class="item"><img src="{{ asset('img-2/screenshoot/4.png') }}" alt="Screen 2"
+                                                           class="img-responsive"></div>
+                                    <div class="item"><img src="{{ asset('img-2/screenshoot/5.png') }}" alt="Screen 3"
+                                                           class="img-responsive"></div>
+                                    <div class="item"><img src="{{ asset('img-2/screenshoot/6.png') }}" alt="Screen 3"
+                                                           class="img-responsive"></div>
+                                    <div class="item"><img src="{{ asset('img-2/screenshoot/7.png') }}" alt="Screen 3"
+                                                           class="img-responsive"></div>
+                                    <div class="item"><img src="{{ asset('img-2/screenshoot/8.png') }}" alt="Screen 3"
+                                                           class="img-responsive"></div>
+                                </div>
+                            </div>
 
-        <div class="section" id="sect3">
-            <div class="anchor" id="anchor3"></div>
-            <div id="hiddenIcon">
-                <i class="fab fa-whatsapp"></i>
-                <p></p>
+                            <div class="slider-indicator">
+                                <ul>
+                                    <li id="prev">
+                                        <i class="fa fa-angle-left"></i>
+                                    </li>
+                                    <li id="next">
+                                        <i class="fa fa-angle-right"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="explanation-right" data-1350=" opacity: 0" data-1400=" opacity:1">
-                <h2>Ou bien sur What'sApp!</h2>
-                <p>Développez des relations commerciales durables par le biais de la conversation chez <a
-                        href="https://api.whatsapp.com/send?phone=22220726780">Daary</a>
-
-                
-
-                <!--End mc_embed_signup-->
+            <div class="section-shape">
+                <img src="img/waves-shape.svg" alt="shape image">
             </div>
-            <!--/ explanation-->
-            <div id="rocket" data-1100="margin-top:-300px; margin-right:0%; opacity: 0"
-                data-1400="margin-top:50; margin-right:20%; opacity:1">
-                <i class="fab fa-whatsapp"></i>
+        </section>
+        <!--end hero section-->
+
+        <!--start promo section-->
+        <section class="promo-section ptb-90">
+            <div class="promo-section-wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="bg-secondary single-promo-section text-center">
+                                <div class="single-promo-content">
+                                    <span class="ti-face-smile  "></span>
+                                    <h6>Facile à utiliser</h6>
+                                    <p>Daary est une application de locations et de ventes immobiliéres personnalisée pour tous vos besoins.</p>
+                                </div>
+                                <div class="line"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="bg-secondary single-promo-section text-center">
+                                <div class="single-promo-content">
+                                    <span class="ti-vector"></span>
+                                    <h6>100% Efficace</h6>
+                                    <p>Trouvez rapidement un bien immobilier selon votre budget et vos besoins specifique.</p>
+                                </div>
+                                <div class="line"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="bg-secondary single-promo-section text-center">
+                                <div class="single-promo-content">
+                                    <span class="ti-palette"></span>
+                                    <h6>Recherche Personnalisé</h6>
+                                    <p>Nous vous montrons des appartements et des maisons qui correspondent le mieux a vos préférences.</p>
+                                </div>
+                                <div class="line"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="bg-secondary single-promo-section text-center">
+                                <div class="single-promo-content">
+                                    <span class="ti-headphone-alt"></span>
+                                    <h6>24/7 Support</h6>
+                                    <p>Accedez a vos données et vos listes de souhait n'importe ou Téléphone, Tablette ou Ordinateur.</p>
+                                </div>
+                                <div class="line"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!--/ rocket-->
-        </div>
-    </div>
-    <!--/ band-->
+        </section>
+        <!--end promo section-->
 
-    <script src="https://api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js"></script>
+        <!--start features section-->
+        <section id="features" class="bg-secondary ptb-90">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-heading text-center">
+                            <h3>Fonctionnalités Daary</h3>
+                            <p>Développez des relations commerciales durables par le biais de la conversation chez Daary</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-4 col-sm-6">
+                        <!--feature single start-->
+                        <div class="single-feature mb-5">
+                            <div class="feature-icon">
+                                <div class="icon icon-shape bg-color white-text">
+                                    <i class="fas fa-people-carry"></i>
+                                </div>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Guide immobiliéres</h5>
+                                <p class="mb-0"><strong>Daary</strong> vous met à disposition un guide adapté à chaque situation.</p>
+                            </div>
+                        </div>
+                        <!--feature single end-->
+                        <!--feature single start-->
+                        <div class="single-feature mb-5">
+                            <div class="feature-icon">
+                                <div class="icon icon-shape bg-color white-text">
+                                    <i class="fa fa-calculator"></i>
+                                </div>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Mon budget</h5>
+                                <p class="mb-0">Définissez votre budget immobilier.</p>
+                            </div>
+                        </div>
+                        <!--feature single end-->
+                        <!--feature single start-->
+                        <div class="single-feature mb-5">
+                            <div class="feature-icon">
+                                <div class="icon icon-shape bg-color white-text">
+                                    <i class="fa fa-smile-o"></i>
+                                </div>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Je suis un agent.</h5>
+                                <p class="mb-0">Définissez vos besoins et priorisez vos critères.</p>
+                            </div>
+                        </div>
+                        <!--feature single end-->
+                    </div>
+                    <div class="col-md-4 hidden-sm hidden-xs">
+                        <div class="feature-image">
+                            <img src="{{ asset('img-2/screenshoot/9.png') }}" style="height: 500px !important;" class="pos-hcenter img-responsive" alt="">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <!--feature single start-->
+                        <div class="single-feature mb-5">
+                            <div class="feature-icon">
+                                <div class="icon icon-shape bg-color white-text">
+                                    <i class="fa fa-file-archive-o"></i>
+                                </div>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Une liste de favories</h5>
+                                <p class="mb-0">Definissez vos listes de souhaits et faites une comparaison de ces derniers.</p>
+                            </div>
+                        </div>
+                        <!--feature single end-->
+                        <!--feature single start-->
+                        <div class="single-feature mb-5">
+                            <div class="feature-icon">
+                                <div class="icon icon-shape bg-color white-text">
+                                    <i class="fa fa-adjust"></i>
+                                </div>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Basculer vers le mode sombre de votre téléphone.</h5>
+                                <p class="mb-0">Un theme qui fatigue nettement moins vos yeux et economise la baterie de votre téléphone.</p>
+                            </div>
+                        </div>
+                        <!--feature single end-->
+                        <!--feature single start-->
+                        <div class="single-feature mb-5">
+                            <div class="feature-icon">
+                                <div class="icon icon-shape bg-color white-text">
+                                    <i class="far fa-comments"></i>
+                                </div>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Entamer une conversation avec vos futurs clients</h5>
+                                <p class="mb-0">Renseignez vous d'avantage sur  le bien en question.</p>
+                            </div>
+                        </div>
+                        <!--feature single end-->
+                    </div>
+                </div>
 
+            </div>
+        </section>
+       
+
+        <!--start faq section-->
+        <section id="faqs" class="faq-section ptb-90">
+            <div class="faq-section-wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="section-heading">
+                                <h3>FAQ</h3>
+                                <p>Choisissez votre prochain plan réussi et commencez dès aujourd'hui!</p>
+                            </div>
+                            <div class="panel-group" id="accordion">
+                                <!-- Start Single Item -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="headingOne">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed">
+                                                Connexion
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <p>Inscrivez-vous pour recevoir chaque mois les meilleurs cotenus immobilies chez Daary.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Single Item -->
+                                <!-- Start Single Item -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="headingTwo">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                                Recuperer mon mot de passe:
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <p>Vous n'avez qu'a indiquez votre numéro de Téléphone dans le formulaire et un code de verification vous sera envoyez, 
+                                                saisissez-le et vous sera rediriger vers la page de changement de mot de passe.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Single Item -->
+                                <!-- Start Single Item -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="headingThree">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                                Checklist
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseThree" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <p>Chaque propriété comporte une tonne de photo et un systéme de like afin de selectionner vos favories pour un usage de comparaison et bien plus... </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Single Item -->
+                                <!-- Start Single Item -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" id="headingFour">
+                                        <h4 class="panel-title">
+                                            <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                                                Recherche Personnalisée
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseFour" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <p>Nous vous montrons les appartements qui vous correspondent mieux à vos preferences. </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Single Item -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="faq-img">
+                                <img src="{{ asset('img-2/screenshoot/log.png') }}" style="height: 700px !important;" class="img-responsive" alt="faq image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--end faq section-->
+
+        <!--start download section-->
+        <section class="download-section" style="background: url('img/download-bg.jpg')no-repeat center center fixed">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 hidden-sm">
+                        <div class="download-app-img">
+                            <img src="{{ asset('img-2/screenshoot/9.png') }}" style="height: 500px !important;" alt="app download" class="img-responsive">
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-12">
+                        <div class="download-app-text">
+                            <h3>Obtenez l'application maintenant!</h3>
+                            <p>Trouvez la maison de vos rêves.</p>
+                            <div class="download-app-button">
+                                <!-- <a href="#" class="download-btn hover-active">
+                                    <span class="ti-apple"></span>
+                                    <p>
+                                        <small>Download On</small>
+                                        <br> App Store
+                                    </p>
+                                </a> -->
+                                <a href="https://play.google.com/store/apps/details?id=com.daary_immo.startup&fbclid=IwAR3ctRNT3sgg3XKQx2QCaAfi0pIeA2oemxtYmzHIjaVAzS4-D3658mw6aeA" class="download-btn hover-active">
+                                    <span class="ti-android"></span>
+                                    <p>
+                                        <small>Git It On</small>
+                                        <br>Google Play
+                                    </p>
+                                </a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--end download section-->
+
+        
+
+        <!--contact us section start-->
+        <section id="contact" class="contact-us ptb-90">
+            <div class="contact-us-wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="section-heading">
+                                <h3>Contactez-nous</h3>
+                                <p>Il est très facile de nous contacter.</p>
+                            </div>
+                            <div class="footer-address">
+                                <h6>Siège social</h6>
+                                <p>Cité BMCI, Nouakchott, Mauritanie</p>
+                                <ul>
+                                    <li><i class="fa fa-phone"></i> <span>Numéro de Téléphone: +222 36 34 60 06</span></li>
+                                    <li><i class="fa fa-envelope-o"></i> <span>Email : <a
+                                            href="mailto:contact@daary-immo.com">contact@daary-immo.com</a></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </section>
+        <!--contact us section end-->
+
+        <!--start footer section-->
+        <footer class="footer-section bg-secondary ptb-60">
+            <div class="footer-wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="footer-single-col text-center">
+                                <img src="{{ asset('img-2/icon-96x96.png') }}" alt="footer logo">
+                                <div class="footer-social-list">
+                                    <ul class="list-inline">
+                                        <li><a href="https://web.facebook.com/Daary-Immo-102640891848033"> <i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="https://api.whatsapp.com/send?phone=+22236346006"> <i class="fa fa-whatsapp"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="copyright-text">
+                                    <p>&copy; copyright <a href="#">Daary Immo</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--end footer section-->
+
+    </div><!--end main content inner-->
+</div>
+<!--end main container -->
 @endsection
 
-
-@section('scripts')
-    <script src="{{ asset('frontend/js/dist/skrollr.min.js') }}"></script>
-    <script>
-        skrollr.init({
-            forceHeight: false
-        });
-
-
-
-        /*!
-         * Plugin for skrollr.
-         * This plugin makes hashlinks scroll nicely to their target position.
-         *
-         * Alexander Prinzhorn - https://github.com/Prinzhorn/skrollr
-         *
-         * Free to use under terms of MIT license
-         */
-        (function(document, window) {
-            'use strict';
-
-            var DEFAULT_DURATION = 500;
-            var DEFAULT_EASING = 'sqrt';
-
-            var MENU_TOP_ATTR = 'data-menu-top';
-            var MENU_OFFSET_ATTR = 'data-menu-offset';
-
-            var skrollr = window.skrollr;
-            var history = window.history;
-            var supportsHistory = !!history.pushState;
-
-            /*
-            Since we are using event bubbling, the element that has been clicked
-            might not acutally be the link but a child.
-            */
-            var findParentLink = function(element) {
-                //Yay, it's a link!
-                if (element.tagName === 'A') {
-                    return element;
-                }
-
-                //We reached the top, no link found.
-                if (element === document) {
-                    return false;
-                }
-
-                //Maybe the parent is a link.
-                return findParentLink(element.parentNode);
-            };
-
-            /*
-            Handle the click event on the document.
-            */
-            var handleClick = function(e) {
-                //Only handle left click.
-                if ((e.which || e.button) !== 1) {
-                    return;
-                }
-
-                var link = findParentLink(e.target);
-
-                //The click did not happen inside a link.
-                if (!link) {
-                    return;
-                }
-
-                if (handleLink(link)) {
-                    e.preventDefault();
-                }
-            };
-
-            /*
-            Handles the click on a link. May be called without an actual click event.
-            When the fake flag is set, the link won't change the url and the position won't be animated.
-            */
-            var handleLink = function(link, fake) {
-                //Don't use the href property (link.href) because it contains the absolute url.
-                var href = link.getAttribute('href');
-
-                //Check if it's a hashlink.
-                if (!/^#/.test(href)) {
-                    return false;
-                }
-
-                //Now get the targetTop to scroll to.
-                var targetTop;
-
-                //If there's a data-menu-top attribute, it overrides the actuall anchor offset.
-                var menuTop = link.getAttribute(MENU_TOP_ATTR);
-
-                if (menuTop !== null) {
-                    targetTop = +menuTop;
-                } else {
-                    var scrollTarget = document.getElementById(href.substr(1));
-
-                    //Ignore the click if no target is found.
-                    if (!scrollTarget) {
-                        return false;
-                    }
-
-                    targetTop = _skrollrInstance.relativeToAbsolute(scrollTarget, 'top', 'top');
-
-                    var menuOffset = scrollTarget.getAttribute(MENU_OFFSET_ATTR);
-
-                    if (menuOffset !== null) {
-                        targetTop += +menuOffset;
-                    }
-                }
-
-                if (supportsHistory && !fake) {
-                    history.pushState({
-                        top: targetTop
-                    }, '', href);
-                }
-
-                //Now finally scroll there.
-                if (_animate && !fake) {
-                    _skrollrInstance.animateTo(targetTop, {
-                        duration: _duration(_skrollrInstance.getScrollTop(), targetTop),
-                        easing: _easing
-                    });
-                } else {
-                    defer(function() {
-                        _skrollrInstance.setScrollTop(targetTop);
-                    });
-                }
-
-                return true;
-            };
-
-            var defer = function(fn) {
-                window.setTimeout(fn, 1);
-            };
-
-            /*
-            Global menu function accessible through window.skrollr.menu.init.
-            */
-            skrollr.menu = {};
-            skrollr.menu.init = function(skrollrInstance, options) {
-                _skrollrInstance = skrollrInstance;
-
-                options = options || {};
-
-                _easing = options.easing || DEFAULT_EASING;
-                _animate = options.animate !== false;
-                _duration = options.duration || DEFAULT_DURATION;
-
-                if (typeof _duration === 'number') {
-                    _duration = (function(duration) {
-                        return function() {
-                            return duration;
-                        };
-                    }(_duration));
-                }
-
-                //Use event bubbling and attach a single listener to the document.
-                skrollr.addEvent(document, 'click', handleClick);
-
-                if (supportsHistory) {
-                    window.addEventListener('popstate', function(e) {
-                        var state = e.state || {};
-                        var top = state.top || 0;
-
-                        defer(function() {
-                            _skrollrInstance.setScrollTop(top);
-                        });
-                    }, false);
-                }
-            };
-
-            //Private reference to the initialized skrollr.
-            var _skrollrInstance;
-
-            var _easing;
-            var _duration;
-            var _animate;
-
-            //In case the page was opened with a hash, prevent jumping to it.
-            //http://stackoverflow.com/questions/3659072/jquery-disable-anchor-jump-when-loading-a-page
-            defer(function() {
-                if (window.location.hash) {
-                    window.scrollTo(0, 0);
-
-                    if (document.querySelector) {
-                        var link = document.querySelector('a[href="' + window.location.hash + '"]');
-
-                        if (link) {
-                            handleLink(link, true);
-                        }
-                    }
-                }
-            });
-        }(document, window));
-
-        var s = skrollr.init( /*other stuff*/ );
-
-        //The options (second parameter) are all optional. The values shown are the default values.
-        skrollr.menu.init(s, {
-            //skrollr will smoothly animate to the new position using `animateTo`.
-            animate: true,
-
-            //The easing function to use.
-            easing: 'sqrt',
-
-            //How long the animation should take in ms.
-            duration: function(currentTop, targetTop) {
-                //By default, the duration is hardcoded at 500ms.
-                return 1000;
-
-                //But you could calculate a value based on the current scroll position (`currentTop`) and the target scroll position (`targetTop`).
-                //return Math.abs(currentTop - targetTop) * 10;
-            },
-        });
-
-        $(".icon-bookmark").click(function() {
-            $("#placemark").addClass("placemarked");
-            $(".icon-bookmark").addClass("pressed");
-        });
-
-    </script>
-@endsection
