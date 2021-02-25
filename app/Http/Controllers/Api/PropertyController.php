@@ -48,17 +48,6 @@ class PropertyController extends Controller
     {
         $request->validate([
             'title'     => 'required|max:255',
-            'price'     => 'required',
-            'purpose'   => 'required',
-            'type'      => 'required',
-            'bedroom'   => 'required',
-            'bathroom'  => 'required',
-            'city'      => 'required',
-            'address'   => 'required',
-            'area'      => 'required',
-            'image'     => 'required|image|mimes:jpeg,jpg,png',
-            'floor_plan' => 'image|mimes:jpeg,jpg,png',
-            'description'        => 'required',
             // 'location_latitude'  => 'required',
             // 'location_longitude' => 'required',
         ]);
@@ -226,13 +215,6 @@ class PropertyController extends Controller
         $request->validate([
             'title'     => 'required|max:255',
             'price'     => 'required',
-            'purpose'   => 'required',
-            'type'      => 'required',
-            'bedroom'   => 'required',
-            'bathroom'  => 'required',
-            'city'      => 'required',
-            'address'   => 'required',
-            'area'      => 'required',
             'image'     => 'image|mimes:jpeg,jpg,png',
             'floor_plan' => 'image|mimes:jpeg,jpg,png',
             'description'        => 'required',

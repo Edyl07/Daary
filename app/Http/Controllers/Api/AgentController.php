@@ -82,7 +82,6 @@ class AgentController extends Controller
             'name'      => 'required',
             'username'  => 'required',
             'phone_number' => 'required|digits:8',
-            'email'     => 'required|email',
             'image'     => 'image|mimes:jpeg,jpg,png',
             'about'     => 'max:250'
         ]);

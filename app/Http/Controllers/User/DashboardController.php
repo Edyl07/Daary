@@ -39,7 +39,6 @@ class DashboardController extends Controller
     {
         $request->validate([
             'name'      => 'required',
-            'image'     => 'image|mimes:jpeg,jpg,png',
             'about'     => 'max:250'
         ]);
 
