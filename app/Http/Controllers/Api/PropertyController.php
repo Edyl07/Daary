@@ -88,7 +88,9 @@ class PropertyController extends Controller
         $property->type     = $request->type;
         $property->cuisine   = $request->cuisine;
         $property->douche   = $request->douche;
-        $property->image    = $imagename;
+        if(isset($imagename)){
+            $property->image = $imagename;
+        }
         $property->bedroom  = $request->bedroom;
         $property->bathroom = $request->bathroom;
         $property->city     = $request->city;
