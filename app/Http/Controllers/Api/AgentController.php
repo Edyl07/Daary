@@ -55,7 +55,7 @@ class AgentController extends Controller
     public function show($id)
     {
         $agent = User::where('role_id', 2)->where('id', $id)->get();
-        $properties_agent = Property::where('agent_id', $id)->paginate(10);
+        $properties_agent = Property::where('agent_id', Auth::id())->paginate(10);
 
         return response()->json(compact('agent', 'properties_agent'));
     }
