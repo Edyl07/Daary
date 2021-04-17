@@ -59,4 +59,5 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('mobile/message', 'Api\PropertyController@message');
     Route::get('mobile/message/replay/{id}', 'Api\PropertyController@messageReplay');
     Route::post('mobile/message/replay', 'Api\PropertyController@messageSend');
+    Route::post('mobile/user_request_property', 'Api\PropertyController@needExpression');
 });

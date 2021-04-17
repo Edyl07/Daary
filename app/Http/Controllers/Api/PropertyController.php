@@ -7,6 +7,7 @@ use App\Message;
 use App\Property;
 use App\PropertyImageGallery;
 use App\Rating;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,7 +93,7 @@ class PropertyController extends Controller
         $property->type     = $request->type;
         $property->cuisine   = $request->cuisine;
         $property->douche   = $request->douche;
-        if(isset($imagename)){
+        if (isset($imagename)) {
             $property->image = $imagename;
         }
         $property->bedroom  = $request->bedroom;
@@ -113,7 +114,7 @@ class PropertyController extends Controller
         // dd($property);
         $property->save();
 
-        
+
         $property->features()->attach($request->features);
 
         $gallary = $request->file('gallaryimage');
@@ -135,46 +136,48 @@ class PropertyController extends Controller
             }
         }
 
-        if ($property->save()){
+        if ($property->save()) {
             // return response()->json(compact());
-            return ['Success'=> $property];
-        }else{
+            return ['Success' => $property];
+        } else {
             // return response()->json(compact(['Error'=> 'Failed Insert Property']));
-            return ['Error'=> 'Failed Insert Property'];
+            return ['Error' => 'Failed Insert Property'];
         }
-
     }
 
     /**
      * add favorite & delete favorite
      */
 
-    public function add(Request $request, $id){
+    public function add(Request $request, $id)
+    {
         $property = Property::findOrFail($id);
 
-        auth()->user()->toggleFavorite($property);  
+        auth()->user()->toggleFavorite($property);
 
         return ['success' => 'add favorite'];
     }
 
 
-     /**
+    /**
      * properties agent
      */
 
-    public function agentProperties(){
-         
+    public function agentProperties()
+    {
+
         $properties = Property::latest()
-        ->withCount('comments')
-        ->where('agent_id', Auth::id())
-        ->paginate(10);
+            ->withCount('comments')
+            ->where('agent_id', Auth::id())
+            ->paginate(10);
 
         return response()->json(compact('properties'));
-     }
+    }
 
 
 
-    public function test(){
+    public function test()
+    {
         return auth()->user();
     }
 
@@ -185,14 +188,14 @@ class PropertyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   
-        $property = Property::with('features','gallery','user','comments')
-                            ->withCount('comments')
-                            ->where('id', $id)
-                            ->first();
-                        
-        $rating = Rating::where('property_id',$property->id)->where('type','property')->avg('rating');
-        $cities = Property::select('city','city_slug')->distinct('city_slug')->get(); 
+    {
+        $property = Property::with('features', 'gallery', 'user', 'comments')
+            ->withCount('comments')
+            ->where('id', $id)
+            ->first();
+
+        $rating = Rating::where('property_id', $property->id)->where('type', 'property')->avg('rating');
+        $cities = Property::select('city', 'city_slug')->distinct('city_slug')->get();
         //$property = Property::find($id);
         return response()->json(compact('property', 'rating', 'cities'));
     }
@@ -224,7 +227,7 @@ class PropertyController extends Controller
             'purpose'     => 'required',
             'type'     => 'required',
             'city'     => 'required',
-            
+
             // 'location_latitude'  => 'required',
             // 'location_longitude' => 'required'
         ]);
@@ -269,7 +272,7 @@ class PropertyController extends Controller
             $imagefloorplan = $property->floor_plan;
         }
 
-        
+
         $property->title    = $request->title;
         $property->slug     = $slug;
         $property->price    = $request->price;
@@ -277,7 +280,7 @@ class PropertyController extends Controller
         $property->type     = $request->type;
         $property->cuisine   = $request->cuisine;
         $property->douche   = $request->douche;
-        if(isset($imagename)){
+        if (isset($imagename)) {
             $property->image = $imagename;
         }
         $property->bedroom  = $request->bedroom;
@@ -295,7 +298,7 @@ class PropertyController extends Controller
 
         $property->description          = $request->description;
         //$property->video                = $request->video;
-        if(isset($imagefloorplan)){
+        if (isset($imagefloorplan)) {
             $property->floor_plan = $imagefloorplan;
         }
         $property->nearby               = $request->nearby;
@@ -323,7 +326,7 @@ class PropertyController extends Controller
             }
         }
 
-        
+
         return ['success' => 'à été mis à jour avec succèss'];
     }
 
@@ -332,11 +335,12 @@ class PropertyController extends Controller
      * properties agent
      */
 
-    public function propertiesAgent($id){
+    public function propertiesAgent($id)
+    {
         $properties = Property::where('agent_id', $id)->paginate(10);
 
         return response()->json(compact('properties'));
-     }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -369,7 +373,7 @@ class PropertyController extends Controller
 
         $property->features()->detach();
 
-        
+
         return ['Success' => 'Ce propriéte a été supprimé', 'Property' => $property];
     }
 
@@ -377,7 +381,7 @@ class PropertyController extends Controller
      * Search Property
      */
 
-   /* public function filter(Request $request)
+    /* public function filter(Request $request)
     {
 
         $this->validate($request, [
@@ -533,11 +537,85 @@ class PropertyController extends Controller
             })
             ->get();
 
-            return response()->json(compact('properties'));
+        return response()->json(compact('properties'));
     }
 
 
-     
+    public function needExpression(Request $request)
+    {
+        $city     = strtolower($request->city);
+        $type     = $request->type;
+        $purpose  = $request->purpose;
+        $bedroom  = $request->bedroom;
+        $bathroom = $request->bathroom;
+        $minprice = $request->minprice;
+        $maxprice = $request->maxprice;
+        $minarea  = $request->minarea;
+        $maxarea  = $request->maxarea;
+        $featured = $request->featured;
+
+        $properties = Property::latest()->withCount('comments')
+            ->when($city, function ($query, $city) {
+                return $query->where('city', '=', $city);
+            })
+            ->when($type, function ($query, $type) {
+                return $query->where('type', '=', $type);
+            })
+            ->when($purpose, function ($query, $purpose) {
+                return $query->where('purpose', '=', $purpose);
+            })
+            ->when($bedroom, function ($query, $bedroom) {
+                return $query->where('bedroom', '=', $bedroom);
+            })
+            ->when($bathroom, function ($query, $bathroom) {
+                return $query->where('bathroom', '=', $bathroom);
+            })
+            ->when($minprice, function ($query, $minprice) {
+                return $query->where('price', '>=', $minprice);
+            })
+            ->when($maxprice, function ($query, $maxprice) {
+                return $query->where('price', '<=', $maxprice);
+            })
+            ->when($minarea, function ($query, $minarea) {
+                return $query->where('area', '>=', $minarea);
+            })
+            ->when($maxarea, function ($query, $maxarea) {
+                return $query->where('area', '<=', $maxarea);
+            })
+            ->when($featured, function ($query, $featured) {
+                return $query->where('featured', '=', $featured);
+            })
+            ->get();
+
+
+        $request->validate([
+            'agent_id'  => 'required',
+            'name'      => 'required',
+            'phone'     => 'required',
+            'message'   => 'required'
+        ]);
+
+        $agents = User::where('role_id', 2)->get();
+
+        $user = User::where('id', Auth::id())->get();
+
+        $message = new Message();
+        foreach ($agents as $agent) {
+            $request->agent_id = $agent->id;
+            $request->message = $properties;
+            $request->name = $user->name;
+            $request->phone = $user->phone;
+            $message->create($request->all());
+        }
+
+        // $message = new Message();
+        // $message->create($request->all());
+
+        return response()->json(compact('properties', 'message'));
+    }
+
+
+
     /**
      * send message to agent
      */
@@ -551,15 +629,14 @@ class PropertyController extends Controller
             'message'   => 'required'
         ]);
 
-         $message = new Message();
-         $message->create($request->all());
+        $message = new Message();
+        $message->create($request->all());
 
-        if($message){
+        if ($message) {
             return response()->json(['message' => 'Message send successfully.', 'info' => $message]);
-        }else{
+        } else {
             return response()->json(['Error' => 'Message send Failed.']);
         }
-
     }
 
     /**
@@ -594,12 +671,12 @@ class PropertyController extends Controller
             'message'   => 'required'
         ]);
 
-         $message = new Message();
-         $message->create($request->all());
+        $message = new Message();
+        $message->create($request->all());
 
-        if($message){
+        if ($message) {
             return response()->json(['message' => 'Message send successfully.']);
-        }else{
+        } else {
             return response()->json(['Error' => 'Message send Failed.']);
         }
     }
