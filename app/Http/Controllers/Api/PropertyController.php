@@ -47,7 +47,11 @@ class PropertyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'     => 'required|max:255',
+            'title'     => 'required',
+            'price'     => 'required',
+            'purpose'     => 'required',
+            'type'     => 'required',
+            'city'     => 'required',
             // 'location_latitude'  => 'required',
             // 'location_longitude' => 'required',
         ]);
@@ -215,11 +219,12 @@ class PropertyController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'title'     => 'required|max:255',
+            'title'     => 'required',
             'price'     => 'required',
-            'image'     => 'image|mimes:jpeg,jpg,png',
-            'floor_plan' => 'image|mimes:jpeg,jpg,png',
-            'description'        => 'required',
+            'purpose'     => 'required',
+            'type'     => 'required',
+            'city'     => 'required',
+            
             // 'location_latitude'  => 'required',
             // 'location_longitude' => 'required'
         ]);
