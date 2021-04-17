@@ -605,6 +605,7 @@ class PropertyController extends Controller
             $request->message = $properties;
             $request->name = $user->name;
             $request->phone = $user->phone;
+            $request->user_id = $user->id;
             $message->create($request->all());
         }
 
