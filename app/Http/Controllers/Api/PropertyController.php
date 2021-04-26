@@ -616,7 +616,7 @@ class PropertyController extends Controller
     }
 
 
-
+    
     /**
      * send message to agent
      */

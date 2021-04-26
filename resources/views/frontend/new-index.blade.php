@@ -73,7 +73,7 @@
                         <div class="hero-content-wrap">
                             <div class="hero-content">
                                 <h1>Trouvez la maison de vos rêves.</h1>
-                                <p>Joignez les meilleurs agents immobilier  s sur les plateformes mobile et devenez proprietare ou locataire a votre tour a prix doux dans toute la zone Mauritanienne et tout cela dans un delais minimum</p>
+                                <p>Joignez les meilleurs agents immobiliers  sur notre plateforme mobile et devenez proprietare ou locataire a votre tour a prix compétitif dans toute la zone Mauritanienne et tout cela dans un délais minimum</p>
                                 <div class="slider-action-btn">
                                     <!-- <a href="#" class="btn softo-solid-btn"><i class="fa fa-apple"></i> Appstore</a> -->
                                     <a href="https://play.google.com/store/apps/details?id=com.daary_immo.startup&fbclid=IwAR3ctRNT3sgg3XKQx2QCaAfi0pIeA2oemxtYmzHIjaVAzS4-D3658mw6aeA" class="btn btn-icon"><i class="fa fa-android"></i></a>
@@ -145,7 +145,7 @@
                                 <div class="single-promo-content">
                                     <span class="ti-vector"></span>
                                     <h6>100% Efficace</h6>
-                                    <p>Trouvez rapidement un bien immobilier selon votre budget et vos besoins specifique.</p>
+                                    <p>Trouvez rapidement un bien immobilier selon votre budget et vos besoins spécifique.</p>
                                 </div>
                                 <div class="line"></div>
                             </div>
@@ -155,7 +155,7 @@
                                 <div class="single-promo-content">
                                     <span class="ti-palette"></span>
                                     <h6>Recherche Personnalisé</h6>
-                                    <p>Nous vous montrons des appartements et des maisons qui correspondent le mieux a vos préférences.</p>
+                                    <p>Nous vous montrons des appartements et des maisons qui correspondent le mieux à vos préférences.</p>
                                 </div>
                                 <div class="line"></div>
                             </div>
@@ -165,7 +165,7 @@
                                 <div class="single-promo-content">
                                     <span class="ti-headphone-alt"></span>
                                     <h6>24/7 Support</h6>
-                                    <p>Accedez a vos données et vos listes de souhait n'importe ou Téléphone, Tablette ou Ordinateur.</p>
+                                    <p>Accedez à vos données et vos listes de souhait n'importe ou Téléphone, Tablette ou Ordinateur.</p>
                                 </div>
                                 <div class="line"></div>
                             </div>
@@ -197,7 +197,7 @@
                                 </div>
                             </div>
                             <div class="feature-content">
-                                <h5>Guide immobiliéres</h5>
+                                <h5>Guide immobiliére</h5>
                                 <p class="mb-0"><strong>Daary</strong> vous met à disposition un guide adapté à chaque situation.</p>
                             </div>
                         </div>
@@ -243,7 +243,7 @@
                                 </div>
                             </div>
                             <div class="feature-content">
-                                <h5>Une liste de favories</h5>
+                                <h5>Une liste de favorie</h5>
                                 <p class="mb-0">Definissez vos listes de souhaits et faites une comparaison de ces derniers.</p>
                             </div>
                         </div>
@@ -257,7 +257,7 @@
                             </div>
                             <div class="feature-content">
                                 <h5>Basculer vers le mode sombre de votre téléphone.</h5>
-                                <p class="mb-0">Un theme qui fatigue nettement moins vos yeux et economise la baterie de votre téléphone.</p>
+                                <p class="mb-0">Un theme qui fatigue néttement moins vos yeux et economise la batterie de votre téléphone.</p>
                             </div>
                         </div>
                         <!--feature single end-->
@@ -436,7 +436,7 @@
         </section>
         <!--contact us section end-->
 
-        <!--start footer section-->
+        <!--start footer section--> 
         <footer class="footer-section bg-secondary ptb-60">
             <div class="footer-wrap">
                 <div class="container">
