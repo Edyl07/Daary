@@ -75,7 +75,7 @@
                                 <h1>Trouvez la maison de vos rêves.</h1>
                                 <p>Joignez les meilleurs agents immobiliers  sur notre plateforme mobile et devenez proprietare ou locataire a votre tour a prix compétitif dans toute la zone Mauritanienne et tout cela dans un délais minimum</p>
                                 <div class="slider-action-btn">
-                                    <!-- <a href="#" class="btn softo-solid-btn"><i class="fa fa-apple"></i> Appstore</a> -->
+                                    <a href="https://apps.apple.com/bj/app/daary-immo/id1554272384" class="btn softo-solid-btn"><i class="fa fa-apple"></i></a>
                                     <a href="https://play.google.com/store/apps/details?id=com.daary_immo.startup&fbclid=IwAR3ctRNT3sgg3XKQx2QCaAfi0pIeA2oemxtYmzHIjaVAzS4-D3658mw6aeA" class="btn btn-icon"><i class="fa fa-android"></i></a>
                                 </div>
                             </div>
