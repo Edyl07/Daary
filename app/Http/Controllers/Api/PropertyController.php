@@ -29,6 +29,17 @@ class PropertyController extends Controller
         return response()->json(compact('properties'));
     }
 
+
+    /**
+     * get properties resources without paginate
+     */
+
+     public function propertiesWithoutPaginate(){
+        $properties = Property::all();
+
+        return response()->json(compact('properties'));
+     }
+
     /**
      * Show the form for creating a new resource.
      *

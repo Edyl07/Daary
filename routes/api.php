@@ -28,6 +28,7 @@ Route::post('mobile/forgot_password', 'Api\Auth\ForgotPasswordController@sendInf
 Route::get('mobile/search', 'Api\PropertyController@search');
 /* ----------------------------------- data api ----------------------------------------------- */
 Route::get('mobile/properties', 'Api\PropertyController@index');
+Route::get('mobile/properties_no_paginate', 'Api\PropertyController@propertiesWithoutPaginate');
 Route::get('mobile/property/{id}', 'Api\PropertyController@show');
 
 Route::get('mobile/agents', 'Api\AgentController@index');
