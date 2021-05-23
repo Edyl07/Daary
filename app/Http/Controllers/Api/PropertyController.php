@@ -364,6 +364,18 @@ class PropertyController extends Controller
         return response()->json(compact('properties'));
     }
 
+
+    /**
+     * properties agent
+     */
+
+    public function propertiesAgentWithOutPaginate($id)
+    {
+        $properties = Property::where('agent_id', $id)->paginate(10);
+
+        return response()->json(compact('properties'));
+    }
+
     /**
      * Remove the specified resource from storage.
      *
