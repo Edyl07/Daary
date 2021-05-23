@@ -55,6 +55,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('mobile/profile', 'Api\AgentController@profile');
     Route::post('mobile/updateProfile', 'Api\AgentController@updateProfile');
     Route::get('mobile/added_properties', 'Api\PropertyController@agentProperties');
+    Route::get('mobile/added_properties_without_paginate', 'Api\PropertyController@agentPropertiesWithoutPaginate');
 
     //message
     Route::get('mobile/message', 'Api\PropertyController@message');

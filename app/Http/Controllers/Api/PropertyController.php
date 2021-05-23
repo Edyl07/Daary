@@ -185,6 +185,17 @@ class PropertyController extends Controller
         return response()->json(compact('properties'));
     }
 
+    public function agentPropertiesWithoutPaginate()
+    {
+
+        $properties = Property::latest()
+            ->withCount('comments')
+            ->where('agent_id', Auth::id())
+            ->get();
+
+        return response()->json(compact('properties'));
+    }
+
 
 
     public function test()
