@@ -24,7 +24,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Property::orderBy('id');
+        $properties = Property::orderBy('id', 'DESC')->get();
 
         return response()->json(compact('properties'));
     }
