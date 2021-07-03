@@ -35,7 +35,7 @@ class PropertyController extends Controller
      */
 
      public function propertiesWithoutPaginate(){
-        $properties = Property::all();
+        $properties = Property::orderBy('id', 'DESC')->get();
 
         return response()->json(compact('properties'));
      }
